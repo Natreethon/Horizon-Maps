@@ -127,6 +127,11 @@ object Geo {
         return t[u] ?: u.lowercase().replace('_', ' ')
     }
 
+    /** Prefer road names; generate missing guidance from manoeuvre IDs instead of raw service text. */
+    fun guidanceLabel(step: Step): String = step.street.ifBlank {
+        maneuverText(step.maneuver, step.roundExit).replaceFirstChar { it.uppercase() }
+    }
+
     private fun laneFits(dir: String, maneuver: String): Boolean {
         val m = maneuver.uppercase()
         return when {

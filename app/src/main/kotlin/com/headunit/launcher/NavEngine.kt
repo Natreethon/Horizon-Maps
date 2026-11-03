@@ -3573,7 +3573,7 @@ class NavEngine(private val ctx: Context, val prefs: Prefs, val map: MapBinding)
             val arriving = cur.maneuver.uppercase().startsWith("ARRIVE")
             val side = if (arriving) arrivalSide(r, cur.maneuver) else ""
             val nxt = ins.getOrNull(k + 1)
-            val street = if (arriving) (dest?.name ?: "Destination") + (if (side.isNotEmpty()) " · ด้าน${Thai.text(side)}" else "") else cur.street.ifBlank { Geo.maneuverText(cur.maneuver, cur.roundExit).replaceFirstChar { it.uppercase() } }
+            val street = if (arriving) (dest?.name ?: "Destination") + (if (side.isNotEmpty()) " · ด้าน${Thai.text(side)}" else "") else Geo.guidanceLabel(cur)
             // several lane sections can touch one junction (the road often widens on the approach): use the one with the most lanes, then the nearest to the junction
             // on motorways and dual carriageways the lanes are looked at (and shown, and spoken) much earlier, as there's further to move over
             val fastRoad = cur.exitNo.isNotBlank() || (fix?.let { f -> try { map.roadAt(f.pos, f.heading)?.cls } catch (e: Throwable) { null } }?.let { it.startsWith("motorway") || it.startsWith("trunk") } == true)
