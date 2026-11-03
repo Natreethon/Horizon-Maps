@@ -268,7 +268,7 @@ object MapboxRest {
         val pts = listOf(from) + via + listOf(to)
         val coords = pts.joinToString(";") { String.format(java.util.Locale.US, "%.6f,%.6f", it.lon, it.lat) }
         val ex = excludes(TomTomRest.avoid)
-        val lang = java.util.Locale.getDefault().language.ifBlank { "en" }
+        val lang = Thai.mapboxLanguage
         var base = "$API/directions/v5/mapbox/driving-traffic/$coords?geometries=geojson&overview=full&steps=true" +
             "&annotations=maxspeed,congestion,duration,distance&language=$lang&alternatives=${alternatives && via.isEmpty()}&access_token=${enc(token)}"
         // the way you're facing, so a reroute doesn't send you the wrong way down the road you're on
@@ -581,7 +581,7 @@ object MapboxRest {
         val t = enc(token)
         val qq = enc(q.trim())
         val cc = country.trim().lowercase()
-        val lang = java.util.Locale.getDefault().language.ifBlank { "en" }
+        val lang = Thai.mapboxLanguage
         val prox = if (near != null) String.format(java.util.Locale.US, "&proximity=%.5f,%.5f", near.lon, near.lat) else ""
         val ctry = if (cc.isNotEmpty()) "&country=$cc" else ""
         val ukish = cc.isEmpty() || cc == "gb"
@@ -650,7 +650,7 @@ object MapboxRest {
      * filtered out, so the app fell back to the free OpenStreetMap servers; those are often busy ("HTTP 429", "HTTP 502").
      */
     fun poiNearby(token: String, kind: String, c: LL, radius: Int): List<Nearby> {
-        val lang = java.util.Locale.getDefault().language.ifBlank { "en" }
+        val lang = Thai.mapboxLanguage
         val near = String.format(java.util.Locale.US, "&proximity=%.5f,%.5f", c.lon, c.lat)
         // a box round the point (about [radius] each way), so the results really are nearby
         val dLat = radius / 111320.0; val dLon = radius / (111320.0 * Math.cos(Math.toRadians(c.lat)).coerceAtLeast(0.2))

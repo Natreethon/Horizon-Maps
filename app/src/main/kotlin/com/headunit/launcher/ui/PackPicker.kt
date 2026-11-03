@@ -40,13 +40,13 @@ internal fun PackPickerDialog(current: PackRegion, onPick: (PackRegion) -> Unit,
     var group by remember { mutableStateOf(current.group) }
     var q by remember { mutableStateOf("") }
     val shown = if (q.isBlank()) PackRegions.all.filter { it.group == group }
-                else PackRegions.all.filter { it.name.contains(q.trim(), true) || it.group.contains(q.trim(), true) }
+                else PackRegions.all.filter { it.name.contains(q.trim(), true) || it.group.contains(q.trim(), true) || com.headunit.launcher.Thai.text(it.name).contains(q.trim(), true) || com.headunit.launcher.Thai.text(it.group).contains(q.trim(), true) }
     Dialog(onDismissRequest = onClose) {
         Column(
             Modifier.widthIn(max = 560.dp).fillMaxWidth().clip(RoundedCornerShape(26.dp)).background(c.panel).border(1.dp, c.line, RoundedCornerShape(26.dp)).padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Text("Choose an area", color = c.text, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+            Text(com.headunit.launcher.Thai.text("Choose an area"), color = c.text, fontSize = 22.sp, fontWeight = FontWeight.Bold)
             SField(q, { q = it }, placeholder = "Search, e.g. France, Texas", width = 520.dp, fill = true)
             if (q.isBlank()) Segmented(PackRegions.groups.map { it to it }, group) { group = it }
             LazyColumn(Modifier.heightIn(max = 340.dp)) {
@@ -59,7 +59,7 @@ internal fun PackPickerDialog(current: PackRegion, onPick: (PackRegion) -> Unit,
                     ) {
                         Column(Modifier.weight(1f)) {
                             Text(r.name, color = c.text, fontSize = 16.sp, fontWeight = if (sel) FontWeight.SemiBold else FontWeight.Medium)
-                            if (q.isNotBlank()) Text(r.group, color = c.sub, fontSize = 12.sp)
+                            if (q.isNotBlank()) Text(com.headunit.launcher.Thai.text(r.group), color = c.sub, fontSize = 12.sp)
                         }
                         if (sel) Icon(Icons.Rounded.Check, null, tint = c.accent, modifier = Modifier.size(20.dp))
                     }

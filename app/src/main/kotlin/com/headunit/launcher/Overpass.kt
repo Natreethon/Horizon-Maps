@@ -482,12 +482,12 @@ object Overpass {
                         }
                     }
                     if (sockets.isNotEmpty()) extra += sockets.take(3).joinToString(", ")
-                    tags.optString("capacity").takeIf { it.isNotBlank() }?.let { extra += "$it points" }
+                    tags.optString("capacity").takeIf { it.isNotBlank() }?.let { extra += "$it จุด" }
                     tags.optString("operator").takeIf { it.isNotBlank() && it != name }?.let { extra += it }
                 }
                 "parking" -> {
                     when (tags.optString("fee")) { "yes" -> extra += "Paid"; "no" -> extra += "Free" }
-                    tags.optString("capacity").takeIf { it.isNotBlank() }?.let { extra += "$it spaces" }
+                    tags.optString("capacity").takeIf { it.isNotBlank() }?.let { extra += "$it ช่อง" }
                     when (tags.optString("parking")) { "multi-storey" -> extra += "Multi-storey"; "underground" -> extra += "Underground" }
                 }
                 "food", "coffee" -> {

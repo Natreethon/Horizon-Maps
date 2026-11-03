@@ -71,7 +71,7 @@ internal fun wxIcon(code: Int): ImageVector = when (code) {
 internal fun Row2(title: String, content: @Composable () -> Unit) {
     val c = LocalVw.current
     Row(Modifier.fillMaxWidth().padding(vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
-        Text(title, color = c.text, fontSize = 16.sp, fontWeight = FontWeight.Medium, modifier = Modifier.weight(1f).padding(end = 18.dp))
+        Text(com.headunit.launcher.Thai.text(title), color = c.text, fontSize = 16.sp, fontWeight = FontWeight.Medium, modifier = Modifier.weight(1f).padding(end = 18.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) { content() }
     }
     Box(Modifier.fillMaxWidth().height(1.dp).background(c.line.copy(alpha = 0.28f)))
@@ -202,7 +202,7 @@ fun rememberShareEta(engine: NavEngine): () -> Unit {
         val d = engine.dest?.name ?: "my destination"
         val e = engine.eta
         val p = engine.fix?.pos
-        return "I'm on my way to $d" + (if (e != null) ", arriving about ${e.arrive}" else "") +
+        return "ฉันกำลังเดินทางไป $d" + (if (e != null) " ถึงประมาณ ${e.arrive}" else "") +
             (if (p != null) ". Where I am now: https://maps.google.com/?q=${p.lat},${p.lon}" else ".")
     }
     fun shareNow() {

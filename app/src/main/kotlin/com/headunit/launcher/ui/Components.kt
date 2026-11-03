@@ -99,8 +99,8 @@ fun Modifier.inset(radius: androidx.compose.ui.unit.Dp = 20.dp, tint: Color? = n
 fun SectionLabel(text: String, modifier: Modifier = Modifier, trailing: String? = null) {
     val c = LocalVw.current
     Row(modifier, verticalAlignment = Alignment.CenterVertically) {
-        Text(text.uppercase(), color = c.sub, fontSize = 11.sp, fontWeight = FontWeight.Medium, letterSpacing = 1.3.sp, modifier = Modifier.weight(1f, fill = trailing != null))
-        if (trailing != null) Text(trailing, color = c.sub, fontSize = 12.sp)
+        Text(com.headunit.launcher.Thai.text(text.uppercase()), color = c.sub, fontSize = 11.sp, fontWeight = FontWeight.Medium, letterSpacing = 1.3.sp, modifier = Modifier.weight(1f, fill = trailing != null))
+        if (trailing != null) Text(com.headunit.launcher.Thai.text(trailing), color = c.sub, fontSize = 12.sp)
     }
 }
 
@@ -120,8 +120,8 @@ fun IconBadge(icon: ImageVector, tint: Color, modifier: Modifier = Modifier, siz
 fun PageTitle(title: String, subtitle: String? = null, modifier: Modifier = Modifier) {
     val c = LocalVw.current
     Column(modifier) {
-        Text(title, color = c.onBg, fontSize = 24.sp, fontWeight = FontWeight.SemiBold, letterSpacing = (-0.3).sp)
-        if (subtitle != null) Text(subtitle, color = c.onBgSub, fontSize = 13.sp, modifier = Modifier.padding(top = 2.dp))
+        Text(com.headunit.launcher.Thai.text(title), color = c.onBg, fontSize = 24.sp, fontWeight = FontWeight.SemiBold, letterSpacing = (-0.3).sp)
+        if (subtitle != null) Text(com.headunit.launcher.Thai.text(subtitle), color = c.onBgSub, fontSize = 13.sp, modifier = Modifier.padding(top = 2.dp))
     }
 }
 
@@ -157,7 +157,7 @@ fun RollText(
                 (androidx.compose.animation.slideOutVertically { -it / 2 } + androidx.compose.animation.fadeOut(androidx.compose.animation.core.tween(120)))
         },
         label = "roll",
-    ) { t -> Text(t, color = color, fontSize = fontSize, fontWeight = fontWeight, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis) }
+    ) { t -> Text(com.headunit.launcher.Thai.text(t), color = color, fontSize = fontSize, fontWeight = fontWeight, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis) }
 }
 
 /** Speed colour that warms from white to amber as you near the limit (red once over it); null when there is no reason to tint. */
@@ -188,7 +188,7 @@ fun Pill(
                         .padding(horizontal = 18.dp, vertical = 10.dp),
         contentAlignment = Alignment.Center,
     ) {
-        Text(text, color = fg, fontSize = 15.sp, fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium, letterSpacing = 0.1.sp)
+        Text(com.headunit.launcher.Thai.text(text), color = fg, fontSize = 15.sp, fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium, letterSpacing = 0.1.sp)
     }
 }
 
@@ -344,11 +344,12 @@ fun rememberVoiceInput(prompt: String, onResult: (String) -> Unit): () -> Unit {
         try {
             launcher.launch(
                 android.content.Intent(android.speech.RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                    .putExtra(android.speech.RecognizerIntent.EXTRA_LANGUAGE, "th-TH")
                     .putExtra(android.speech.RecognizerIntent.EXTRA_LANGUAGE_MODEL, android.speech.RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-                    .putExtra(android.speech.RecognizerIntent.EXTRA_PROMPT, prompt),
+                    .putExtra(android.speech.RecognizerIntent.EXTRA_PROMPT, com.headunit.launcher.Thai.text(prompt)),
             )
         } catch (e: Exception) {
-            android.widget.Toast.makeText(ctx, "No voice recognition app found on this device", android.widget.Toast.LENGTH_LONG).show()
+            android.widget.Toast.makeText(ctx, com.headunit.launcher.Thai.text("No voice recognition app found on this device"), android.widget.Toast.LENGTH_LONG).show()
         }
     }
 }

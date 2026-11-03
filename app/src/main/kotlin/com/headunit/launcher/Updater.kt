@@ -264,7 +264,7 @@ object Updater {
         // so every later try failed with "open failed: ENOENT (No such file or directory)"
         try { dir.listFiles()?.filter { it.name.startsWith("HorizonNav-") && it.name.endsWith(".apk") }?.forEach { it.delete() } } catch (e: Exception) { }
         val req = DownloadManager.Request(Uri.parse(u.url))
-            .setTitle("Horizon Nav ${u.version}")
+            .setTitle(com.headunit.launcher.Thai.text("Horizon Nav ${u.version}"))
             .setMimeType("application/vnd.android.package-archive")
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
             .setDestinationInExternalFilesDir(ctx, null, name)
@@ -331,9 +331,9 @@ object Updater {
                         val percent = (done * 100 / total).coerceIn(0, 100)
                         val doneMb = done / (1024.0 * 1024.0)
                         val totalMb = total / (1024.0 * 1024.0)
-                        progress("Downloading… $percent% (${"%.1f".format(java.util.Locale.UK, doneMb)} / ${"%.1f".format(java.util.Locale.UK, totalMb)} MB)")
+                        progress("กำลังดาวน์โหลด… $percent% (${"%.1f".format(java.util.Locale.UK, doneMb)} / ${"%.1f".format(java.util.Locale.UK, totalMb)} MB)")
                     } else if (done > 0) {
-                        progress("Downloading… ${"%.1f".format(java.util.Locale.UK, done / (1024.0 * 1024.0))} MB")
+                        progress("กำลังดาวน์โหลด… ${"%.1f".format(java.util.Locale.UK, done / (1024.0 * 1024.0))} MB")
                     }
                 }
             }

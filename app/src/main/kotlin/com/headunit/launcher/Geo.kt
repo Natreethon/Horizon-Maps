@@ -79,54 +79,50 @@ object Geo {
     fun fmtDist(m: Double, imperial: Boolean): String {
         if (imperial) {
             val ft = m * 3.28084
-            if (ft < 100) return "${max(10, ((ft / 10).roundToInt()) * 10)} ft"
-            if (ft < 528) return "${max(100, ((ft / 50).roundToInt()) * 50)} ft"
+            if (ft < 100) return "${max(10, ((ft / 10).roundToInt()) * 10)} ฟุต"
+            if (ft < 528) return "${max(100, ((ft / 50).roundToInt()) * 50)} ฟุต"
             val mi = m / 1609.344
-            return if (mi < 10) String.format("%.1f mi", mi) else "${mi.roundToInt()} mi"
+            return if (mi < 10) String.format("%.1f ไมล์", mi) else "${mi.roundToInt()} ไมล์"
         }
         if (m < 1000) {
             val v = if (m < 100) max(10, ((m / 10).roundToInt()) * 10) else ((m / 50).roundToInt()) * 50
             return "$v m"
         }
         val k = m / 1000.0
-        return if (k < 10) String.format("%.1f km", k) else "${k.roundToInt()} km"
+        return if (k < 10) String.format("%.1f กม.", k) else "${k.roundToInt()} กม."
     }
 
     fun fmtDur(sec: Double): String {
         val m = max(0, (sec / 60).roundToInt())
-        return if (m < 60) "$m min" else "${m / 60} h ${(m % 60).toString().padStart(2, '0')} min"
+        return if (m < 60) "$m นาที" else "${m / 60} ชม. ${(m % 60).toString().padStart(2, '0')} นาที"
     }
 
     fun spoken(m: Double, imperial: Boolean): String {
         if (imperial) {
             val ft = m * 3.28084
-            return if (ft < 528) "${((ft / 50).roundToInt()) * 50} feet" else String.format("%.1f miles", m / 1609.344)
+            return if (ft < 528) "${((ft / 50).roundToInt()) * 50} ฟุต" else String.format("%.1f ไมล์", m / 1609.344)
         }
-        return if (m < 1000) "${((m / 50).roundToInt()) * 50} metres" else String.format("%.1f kilometres", m / 1000.0)
+        return if (m < 1000) "${((m / 50).roundToInt()) * 50} เมตร" else String.format("%.1f กิโลเมตร", m / 1000.0)
     }
 
-    fun ordinal(n: Int): String = when {
-        n % 100 in 11..13 -> "${n}th"
-        n % 10 == 1 -> "${n}st"; n % 10 == 2 -> "${n}nd"; n % 10 == 3 -> "${n}rd"
-        else -> "${n}th"
-    }
+    fun ordinal(n: Int): String = n.toString()
 
     /** Spoken/short wording for a manoeuvre, e.g. "turn left" or "take the 2nd exit at the roundabout". */
     fun maneuverText(m: String, exit: Int = 0): String {
         val u = m.uppercase()
         if (u.startsWith("ROUNDABOUT")) {
-            if (u == "ROUNDABOUT_BACK") return if (exit > 0) "take the ${ordinal(exit)} exit at the roundabout" else "go all the way round the roundabout"
-            return if (exit > 0) "at the roundabout, take the ${ordinal(exit)} exit" else "take the roundabout"
+            if (u == "ROUNDABOUT_BACK") return if (exit > 0) "ใช้ทางออกที่ ${ordinal(exit)} ที่วงเวียน" else "วนรอบวงเวียนเพื่อกลับรถ"
+            return if (exit > 0) "ที่วงเวียน ใช้ทางออกที่ ${ordinal(exit)}" else "เข้าสู่วงเวียน"
         }
         val t = mapOf(
-            "ARRIVE" to "arrive", "ARRIVE_LEFT" to "arrive, destination on the left", "ARRIVE_RIGHT" to "arrive, destination on the right",
-            "DEPART" to "head out", "MAKE_UTURN" to "make a U-turn", "TRY_MAKE_UTURN" to "make a U-turn when possible",
-            "STRAIGHT" to "continue straight", "FOLLOW" to "continue", "TURN_LEFT" to "turn left", "TURN_RIGHT" to "turn right",
-            "SHARP_LEFT" to "turn sharp left", "SHARP_RIGHT" to "turn sharp right", "BEAR_LEFT" to "bear left", "BEAR_RIGHT" to "bear right",
-            "KEEP_LEFT" to "keep left", "KEEP_RIGHT" to "keep right", "ENTER_MOTORWAY" to "join the motorway", "ENTER_FREEWAY" to "join the main road",
-            "ENTER_HIGHWAY" to "join the main road", "TAKE_EXIT" to "take the exit", "MOTORWAY_EXIT_LEFT" to "take the exit on the left",
-            "MOTORWAY_EXIT_RIGHT" to "take the exit on the right", "ENTRANCE_RAMP" to "take the slip road", "SWITCH_PARALLEL_ROAD" to "switch to the parallel road",
-            "SWITCH_MAIN_ROAD" to "switch to the main road", "TAKE_FERRY" to "take the ferry",
+            "ARRIVE" to "ถึงปลายทาง", "ARRIVE_LEFT" to "ถึงปลายทางด้านซ้าย", "ARRIVE_RIGHT" to "ถึงปลายทางด้านขวา",
+            "DEPART" to "ออกเดินทาง", "MAKE_UTURN" to "กลับรถ", "TRY_MAKE_UTURN" to "กลับรถเมื่อทำได้",
+            "STRAIGHT" to "ตรงไป", "FOLLOW" to "ขับต่อไป", "TURN_LEFT" to "เลี้ยวซ้าย", "TURN_RIGHT" to "เลี้ยวขวา",
+            "SHARP_LEFT" to "เลี้ยวซ้ายหักศอก", "SHARP_RIGHT" to "เลี้ยวขวาหักศอก", "BEAR_LEFT" to "เบี่ยงซ้าย", "BEAR_RIGHT" to "เบี่ยงขวา",
+            "KEEP_LEFT" to "ชิดซ้าย", "KEEP_RIGHT" to "ชิดขวา", "ENTER_MOTORWAY" to "เข้าสู่มอเตอร์เวย์", "ENTER_FREEWAY" to "เข้าสู่ถนนหลัก",
+            "ENTER_HIGHWAY" to "เข้าสู่ถนนหลัก", "TAKE_EXIT" to "ใช้ทางออก", "MOTORWAY_EXIT_LEFT" to "ใช้ทางออกด้านซ้าย",
+            "MOTORWAY_EXIT_RIGHT" to "ใช้ทางออกด้านขวา", "ENTRANCE_RAMP" to "ใช้ทางเชื่อม", "SWITCH_PARALLEL_ROAD" to "เปลี่ยนไปทางคู่ขนาน",
+            "SWITCH_MAIN_ROAD" to "เปลี่ยนไปถนนหลัก", "TAKE_FERRY" to "ใช้เรือข้ามฟาก",
         )
         return t[u] ?: u.lowercase().replace('_', ' ')
     }
@@ -149,19 +145,19 @@ object Geo {
         val act = sec.lanes.indices.filter { i -> if (anyFollow) sec.lanes[i].follow != null else sec.lanes[i].dirs.any { laneFits(it, maneuver) } }
         if (act.isEmpty() || act.size == n) return null
         val cnt = act.size
-        val lanes = if (cnt == 1) "lane" else "${if (cnt == 2) "two" else if (cnt == 3) "three" else cnt.toString()} lanes"
+        val lanes = if (cnt == 1) "ช่องทาง" else "${cnt.toString()} ช่องทาง"
         return when {
-            act.first() == 0 -> "Use the left $lanes"
-            act.last() == n - 1 -> "Use the right $lanes"
-            cnt == 1 -> "Use lane ${act[0] + 1} from the left"
-            else -> "Use the middle $lanes"
+            act.first() == 0 -> "ใช้ $lanes ด้านซ้าย"
+            act.last() == n - 1 -> "ใช้ $lanes ด้านขวา"
+            cnt == 1 -> "ใช้ช่องทางที่ ${act[0] + 1} จากซ้าย"
+            else -> "ใช้ $lanes ตรงกลาง"
         }
     }
 
     /** Short caption shown on the turn card for a roundabout or motorway exit, or blank. */
     fun stepTag(s: Step): String = when {
-        s.maneuver.uppercase().startsWith("ROUNDABOUT") && s.roundExit > 0 -> "${ordinal(s.roundExit)} exit"
-        s.exitNo.isNotBlank() -> "Exit ${s.exitNo}"
+        s.maneuver.uppercase().startsWith("ROUNDABOUT") && s.roundExit > 0 -> "ทางออกที่ ${ordinal(s.roundExit)}"
+        s.exitNo.isNotBlank() -> "ทางออก ${s.exitNo}"
         else -> ""
     }
 
@@ -239,7 +235,7 @@ object TomTomRest {
         val out = ArrayList<Place>()
         // 1. classic fuzzy search
         try {
-            var url = "$SEARCH/$enc.json?key=$k&limit=15&language=en-GB&typeahead=true&minFuzzyLevel=1&maxFuzzyLevel=2&idxSet=POI,Addr,Str,Xstr,Geo,PAD"
+            var url = "$SEARCH/$enc.json?key=$k&limit=15&language=th-TH&typeahead=true&minFuzzyLevel=1&maxFuzzyLevel=2&idxSet=POI,Addr,Str,Xstr,Geo,PAD"
             if (cc.isNotEmpty()) url += "&countrySet=$cc"
             if (near != null) url += "&lat=${near.lat}&lon=${near.lon}"
             parsePlaces(JSONObject(get(url)).optJSONArray("results") ?: JSONArray(), q, out)
@@ -328,7 +324,7 @@ object TomTomRest {
         val base = "$API/routing/calculateRoute/$loc/json?key=$k&apiVersion=2&maxAlternatives=$n"
         val iso = if (departAtMs > 0) java.net.URLEncoder.encode(java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", java.util.Locale.US).format(java.util.Date(departAtMs)), "UTF-8") else ""
         val dep = if (iso.isNotEmpty()) "&departAt=$iso" else ""
-        val lang = "&language=" + URLEncoder.encode(java.util.Locale.getDefault().toLanguageTag(), "UTF-8")
+        val lang = "&language=" + URLEncoder.encode(Thai.tomtomLanguage, "UTF-8")
         // The classic routing API is tried first: it returns turn-by-turn instructions, roundabout exits and lane data.
         // The newer Orbis routing API does not return any guidance, so it is only a fallback for the line itself.
         val prefs = avoid.joinToString("") { "&avoid=$it" } + (if (routeType != "fastest") "&routeType=$routeType" else "")
@@ -415,7 +411,7 @@ object TomTomRest {
     fun poiNearby(key: String, kind: String, c: LL, radius: Int): List<Nearby> {
         val k = URLEncoder.encode(key, "UTF-8")
         val q = URLEncoder.encode(poiQuery(kind), "UTF-8").replace("+", "%20")
-        val body = get("https://api.tomtom.com/search/2/categorySearch/$q.json?key=$k&lat=${c.lat}&lon=${c.lon}&radius=$radius&limit=25&language=en-GB", 8000, 12000)
+        val body = get("https://api.tomtom.com/search/2/categorySearch/$q.json?key=$k&lat=${c.lat}&lon=${c.lon}&radius=$radius&limit=25&language=th-TH", 8000, 12000)
         val arr = JSONObject(body).optJSONArray("results") ?: JSONArray()
         return (0 until arr.length()).mapNotNull { poiResult(arr.getJSONObject(it), kind, c) }
     }
@@ -642,7 +638,7 @@ object Weather {
         val dt = d.getJSONArray("time"); val dc = d.getJSONArray("weather_code")
         val mx = d.getJSONArray("temperature_2m_max"); val mn = d.getJSONArray("temperature_2m_min")
         val parse = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US)
-        val show = java.text.SimpleDateFormat("EEE", java.util.Locale.getDefault())
+        val show = java.text.SimpleDateFormat("EEE", Thai.locale)
         val days = (0 until dt.length()).map { i ->
             val label = if (i == 0) "Today" else show.format(parse.parse(dt.getString(i))!!)
             Day(label, dc.getInt(i), mx.getDouble(i), mn.getDouble(i))

@@ -50,7 +50,7 @@ internal fun openDonate(ctx: Context) {
     try {
         ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(DONATE_URL)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
     } catch (e: Exception) {
-        android.widget.Toast.makeText(ctx, "There's no web browser on this unit. Scan the code with your phone instead.", android.widget.Toast.LENGTH_LONG).show()
+        android.widget.Toast.makeText(ctx, com.headunit.launcher.Thai.text("There's no web browser on this unit. Scan the code with your phone instead."), android.widget.Toast.LENGTH_LONG).show()
     }
 }
 
@@ -89,9 +89,9 @@ internal fun DonateDialog(dark: Boolean, onClose: () -> Unit) {
                 Box(Modifier.size(42.dp).clip(RoundedCornerShape(13.dp)).background(pink.copy(alpha = 0.22f)), contentAlignment = Alignment.Center) {
                     Icon(Icons.Rounded.Favorite, null, tint = pink, modifier = Modifier.size(24.dp))
                 }
-                Text("HORIZON NAV", color = pink, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.5.sp)
-                Text("Enjoying Horizon Nav?", color = v.text, fontSize = 24.sp, fontWeight = FontWeight.Bold, lineHeight = 29.sp)
-                Text("It's free, with no ads, made by one person in their spare time. If it's useful to you, a small donation helps keep it going.",
+                Text(com.headunit.launcher.Thai.text("HORIZON NAV"), color = pink, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.5.sp)
+                Text(com.headunit.launcher.Thai.text("Enjoying Horizon Nav?"), color = v.text, fontSize = 24.sp, fontWeight = FontWeight.Bold, lineHeight = 29.sp)
+                Text(com.headunit.launcher.Thai.text("It's free, with no ads, made by one person in their spare time. If it's useful to you, a small donation helps keep it going."),
                     color = headText, fontSize = 14.sp, lineHeight = 20.sp)
             }
         }
@@ -101,9 +101,9 @@ internal fun DonateDialog(dark: Boolean, onClose: () -> Unit) {
                     Image(qr, "QR code for the PayPal donation page", Modifier.size(124.dp), filterQuality = FilterQuality.None)
                 }
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text("Scan with your phone", color = v.text, fontSize = 17.sp, fontWeight = FontWeight.Bold)
-                    Text("Opens PayPal on your phone", color = v.sub, fontSize = 14.sp)
-                    Text(DONATE_SHORT, color = v.sub, fontSize = 14.sp)
+                    Text(com.headunit.launcher.Thai.text("Scan with your phone"), color = v.text, fontSize = 17.sp, fontWeight = FontWeight.Bold)
+                    Text(com.headunit.launcher.Thai.text("Opens PayPal on your phone"), color = v.sub, fontSize = 14.sp)
+                    Text(com.headunit.launcher.Thai.text(DONATE_SHORT), color = v.sub, fontSize = 14.sp)
                 }
             }
         }
@@ -111,11 +111,11 @@ internal fun DonateDialog(dark: Boolean, onClose: () -> Unit) {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 Button(onClick = { openDonate(ctx); onClose() }, modifier = Modifier.weight(1f), shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = pink, contentColor = if (dark) Color(0xFF3A0F28) else Color.White)) {
-                    Text("Donate on this screen", fontWeight = FontWeight.Bold, modifier = Modifier.padding(vertical = 4.dp))
+                    Text(com.headunit.launcher.Thai.text("Donate on this screen"), fontWeight = FontWeight.Bold, modifier = Modifier.padding(vertical = 4.dp))
                 }
                 Button(onClick = onClose, modifier = Modifier.weight(1f), shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = v.tile, contentColor = v.text)) {
-                    Text("Maybe later", modifier = Modifier.padding(vertical = 4.dp))
+                    Text(com.headunit.launcher.Thai.text("Maybe later"), modifier = Modifier.padding(vertical = 4.dp))
                 }
             }
         }

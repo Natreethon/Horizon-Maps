@@ -21,7 +21,7 @@ android {
         val run = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 0
         versionCode = 100 + run
         versionName = "1.0.$run"
-        resValue("string", "app_name", "Horizon Nav")
+        resValue("string", "app_name", "Horizon Nav ไทย")
         // only the chips head units and phones use (the Mapbox map comes with a copy for each, so this keeps the APK much smaller)
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
     }
@@ -56,15 +56,15 @@ android {
     productFlavors {
         create("public") {
             dimension = "key"
-            applicationIdSuffix = ".public"
+            applicationIdSuffix = ".thai"
             // No TomTom key is ever built into the app: anyone can pull it out of a shared APK and run up the bill on it.
             // People paste their own in Settings > Data (or the app uses Mapbox).
             buildConfigField("String", "TOMTOM_API_KEY", "\"\"")
             buildConfigField("String", "DEFAULT_MAP", "\"mapbox\"")
             // where the build's "publish" option puts new versions (the "app" release); the app checks it for updates
-            buildConfigField("String", "UPDATE_REPO", "\"benbishop028-arch/Horizon-Maps\"")
+            buildConfigField("String", "UPDATE_REPO", "\"Natreethon/Horizon-Maps\"")
             // the APK file the updater looks for in that release
-            buildConfigField("String", "UPDATE_APK", "\"HorizonNav-public.apk\"")
+            buildConfigField("String", "UPDATE_APK", "\"HorizonNav-Thai.apk\"")
         }
     }
     compileOptions {
@@ -105,9 +105,9 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
 }
 
-// After a release build, put the APK in one folder with a clear name (HorizonNav-public.apk), where the GitHub build picks it up.
+// After a release build, put the APK in one folder with a clear name (HorizonNav-Thai.apk), where the GitHub build picks it up.
 val collectApks by tasks.registering(Copy::class) {
-    from(layout.buildDirectory.dir("outputs/apk/public/release")) { include("*.apk"); rename { "HorizonNav-public.apk" } }
+    from(layout.buildDirectory.dir("outputs/apk/public/release")) { include("*.apk"); rename { "HorizonNav-Thai.apk" } }
     into(layout.buildDirectory.dir("outputs/apk/release"))
 }
 tasks.matching { it.name == "assembleRelease" }.configureEach { finalizedBy(collectApks) }

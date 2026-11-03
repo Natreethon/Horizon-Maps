@@ -117,7 +117,7 @@ fun AlertSign(a: AlertInfo, size: Dp) {
             "limit" -> {
                 val n = Regex("\\d+").find(a.text)?.value ?: ""
                 Box(Modifier.fillMaxSize().clip(CircleShape).background(Color.White).border(size * 0.09f, Bad, CircleShape), contentAlignment = Alignment.Center) {
-                    Text(n, color = Color.Black, fontSize = (size.value * (if (n.length >= 3) 0.30f else 0.40f)).sp, fontWeight = FontWeight.Bold, maxLines = 1)
+                    Text(com.headunit.launcher.Thai.text(n), color = Color.Black, fontSize = (size.value * (if (n.length >= 3) 0.30f else 0.40f)).sp, fontWeight = FontWeight.Bold, maxLines = 1)
                 }
             }
             "stop" -> {
@@ -137,7 +137,7 @@ fun AlertSign(a: AlertInfo, size: Dp) {
                     drawPath(oct(r), Color.White)
                     drawPath(oct(r * 0.86f), Color(0xFFC8102E))
                 }
-                Text("STOP", color = Color.White, fontSize = (size.value * 0.26f).sp, fontWeight = FontWeight.Bold, maxLines = 1)
+                Text(com.headunit.launcher.Thai.text("STOP"), color = Color.White, fontSize = (size.value * 0.26f).sp, fontWeight = FontWeight.Bold, maxLines = 1)
             }
             "wrongway" -> {
                 // the no-entry sign
@@ -214,8 +214,8 @@ fun AlertBanner(a: AlertInfo, modifier: Modifier = Modifier) {
         Row(Modifier.padding(start = 12.dp, end = 18.dp, top = 10.dp, bottom = 10.dp), verticalAlignment = Alignment.CenterVertically) {
             AlertSign(a, 54.dp)
             Column(Modifier.padding(start = 12.dp)) {
-                Text(alertLabel(a.kind), color = col, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.2.sp, maxLines = 1)
-                Text(a.text, color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.SemiBold, maxLines = 2, overflow = TextOverflow.Ellipsis, lineHeight = 22.sp)
+                Text(com.headunit.launcher.Thai.text(alertLabel(a.kind)), color = col, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.2.sp, maxLines = 1)
+                Text(com.headunit.launcher.Thai.text(a.text), color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.SemiBold, maxLines = 2, overflow = TextOverflow.Ellipsis, lineHeight = 22.sp)
             }
         }
         Box(Modifier.fillMaxWidth().height(4.dp).background(Color.White.copy(alpha = 0.08f))) {
@@ -236,7 +236,7 @@ fun HazardBadge(kind: String, label: String, dist: String) {
     Row(Modifier.panel(6.dp, shape, c.surface).border(1.dp, c.line, shape).padding(start = 12.dp, end = 14.dp, top = 7.dp, bottom = 7.dp),
         verticalAlignment = Alignment.CenterVertically) {
         AlertSign(AlertInfo(kind, label), 24.dp)
-        Text(dist, color = c.text, fontSize = 13.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(start = 8.dp))
+        Text(com.headunit.launcher.Thai.text(dist), color = c.text, fontSize = 13.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(start = 8.dp))
     }
 }
 
@@ -272,7 +272,7 @@ fun SpeedLimitSign(engine: NavEngine, size: Dp, modifier: Modifier = Modifier, o
             drawArc(Color.White.copy(alpha = 0.35f), 200f, 140f, false, topLeft = Offset(ctr.x - r * 0.88f, ctr.y - r * 0.88f),
                 size = androidx.compose.ui.geometry.Size(r * 1.76f, r * 1.76f), style = Stroke(width = r * 0.05f, cap = androidx.compose.ui.graphics.StrokeCap.Round))
         }
-        Text("$n", color = if (engine.limitEstimated) Color(0xFF4A4A4A) else Color(0xFF111111), fontSize = (size.value * (if (n >= 100) 0.31f else 0.39f)).sp, fontWeight = FontWeight.Black, maxLines = 1,
+        Text(com.headunit.launcher.Thai.text("$n"), color = if (engine.limitEstimated) Color(0xFF4A4A4A) else Color(0xFF111111), fontSize = (size.value * (if (n >= 100) 0.31f else 0.39f)).sp, fontWeight = FontWeight.Black, maxLines = 1,
             letterSpacing = (-0.5).sp, style = androidx.compose.ui.text.TextStyle(shadow = androidx.compose.ui.graphics.Shadow(Color(0x33000000), Offset(0f, 1.5f), 2f)))
     }
 }
@@ -294,12 +294,12 @@ private fun LimitBoard(n: Int, canada: Boolean, over: Boolean, estimated: Boolea
     ) {
         androidx.compose.foundation.layout.Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = androidx.compose.foundation.layout.Arrangement.Center) {
             val head = (size.value * 0.12f).sp
-            if (canada) Text("MAXIMUM", color = Color(0xFF151515), fontSize = (size.value * 0.105f).sp, fontWeight = FontWeight.Bold, maxLines = 1, lineHeight = head)
+            if (canada) Text(com.headunit.launcher.Thai.text("MAXIMUM"), color = Color(0xFF151515), fontSize = (size.value * 0.105f).sp, fontWeight = FontWeight.Bold, maxLines = 1, lineHeight = head)
             else {
-                Text("SPEED", color = Color(0xFF151515), fontSize = head, fontWeight = FontWeight.Bold, maxLines = 1, lineHeight = head)
-                Text("LIMIT", color = Color(0xFF151515), fontSize = head, fontWeight = FontWeight.Bold, maxLines = 1, lineHeight = head)
+                Text(com.headunit.launcher.Thai.text("SPEED"), color = Color(0xFF151515), fontSize = head, fontWeight = FontWeight.Bold, maxLines = 1, lineHeight = head)
+                Text(com.headunit.launcher.Thai.text("LIMIT"), color = Color(0xFF151515), fontSize = head, fontWeight = FontWeight.Bold, maxLines = 1, lineHeight = head)
             }
-            Text("$n", color = if (estimated) Color(0xFF4A4A4A) else Color(0xFF111111), fontSize = (size.value * (if (n >= 100) 0.3f else 0.38f)).sp,
+            Text(com.headunit.launcher.Thai.text("$n"), color = if (estimated) Color(0xFF4A4A4A) else Color(0xFF111111), fontSize = (size.value * (if (n >= 100) 0.3f else 0.38f)).sp,
                 fontWeight = FontWeight.Black, maxLines = 1, lineHeight = (size.value * 0.4f).sp)
         }
     }

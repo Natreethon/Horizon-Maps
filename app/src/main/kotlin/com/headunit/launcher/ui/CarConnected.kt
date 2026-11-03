@@ -45,22 +45,22 @@ internal fun CarConnectedScreen(engine: NavEngine, onShowMap: () -> Unit, onSett
             Box(Modifier.size(84.dp).clip(CircleShape).background(c.accent.copy(alpha = 0.16f)), contentAlignment = Alignment.Center) {
                 Icon(Icons.Rounded.DirectionsCar, null, tint = c.accent, modifier = Modifier.size(44.dp))
             }
-            Text(if (guiding) "Navigating on your car screen" else "Horizon Nav is on your car screen", color = c.text, fontSize = 24.sp,
+            Text(com.headunit.launcher.Thai.text(if (guiding) "Navigating on your car screen" else "Horizon Nav is on your car screen"), color = c.text, fontSize = 24.sp,
                 fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
             if (guiding && e != null) {
                 val dc = if (e.delayMin >= 10) Bad else if (e.delayMin >= 1) Warn else Good
                 Column(Modifier.panel(10.dp, RoundedCornerShape(24.dp), c.surface).padding(horizontal = 22.dp, vertical = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Text(engine.dest?.name ?: "Your destination", color = c.text, fontSize = 18.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(com.headunit.launcher.Thai.text(engine.dest?.name ?: "Your destination"), color = c.text, fontSize = 18.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     Row(horizontalArrangement = Arrangement.spacedBy(26.dp), verticalAlignment = Alignment.CenterVertically) {
-                        ImmStat(Geo.fmtDur(e.secs), if (e.delayMin >= 1) "+${e.delayMin} min traffic" else "time left", dc)
+                        ImmStat(Geo.fmtDur(e.secs), if (e.delayMin >= 1) "รถติด +${e.delayMin} นาที" else "time left", dc)
                         ImmStat(e.arrive, "arrival", c.text)
                         ImmStat(Geo.fmtDist(e.dist, engine.imperial), "to go", c.text)
                     }
                 }
                 ImmPill("End route", { engine.endRoute() }, icon = Icons.Rounded.Close)
             } else {
-                Text("Pick where to go on the car screen, or share a place to Horizon Nav from any app and it appears there.",
+                Text(com.headunit.launcher.Thai.text("Pick where to go on the car screen, or share a place to Horizon Nav from any app and it appears there."),
                     color = c.sub, fontSize = 15.sp, textAlign = TextAlign.Center)
             }
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {

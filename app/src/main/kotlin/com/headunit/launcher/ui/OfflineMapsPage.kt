@@ -35,7 +35,7 @@ private fun MapboxOfflineGroup(prefs: Prefs, engine: NavEngine) {
         if (!engine.hasMapbox) SNote("Add your Mapbox access token in Settings > Keys & accounts first.")
         val km = prefs.s(PreferenceKeys.MBHOMEKM, "30").toIntOrNull() ?: 30
         val home = engine.places.slot("home")
-        SItem("Around home", if (home == null) "Set Home first (Search, then save a place as Home)" else "The 3D map within $km km of Home · about ${off.homeMb(km)} MB")
+        SItem("Around home", if (home == null) "Set Home first (Search, then save a place as Home)" else "แผนที่ 3 มิติรอบบ้าน $km กม. · ประมาณ ${off.homeMb(km)} MB")
         // (the distance choice and Save go on a line of their own: beside the title they squeezed it into a narrow column)
         androidx.compose.foundation.layout.Row(Modifier.fillMaxWidth().padding(bottom = 8.dp), horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(10.dp),
             verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
@@ -44,7 +44,7 @@ private fun MapboxOfflineGroup(prefs: Prefs, engine: NavEngine) {
             if (home != null && engine.hasMapbox) SButton(if (off.busy?.startsWith("Around home") == true) "Saving…" else "Save", primary = true) { off.saveHome(ctx, home.pos, km) }
         }
         val r = engine.route
-        SItem("Save the map for this route", if (r == null) "Plan a route first" else engine.offlineRouteName() + " · a strip along the route · about ${off.routeMb(r.len)} MB") {
+        SItem("Save the map for this route", if (r == null) "Plan a route first" else engine.offlineRouteName() + " · แนวตามเส้นทาง · ประมาณ ${off.routeMb(r.len)} MB") {
             if (r != null && engine.hasMapbox) SButton("Save", primary = true) { off.saveRoute(ctx, engine.offlineRouteName(), r.pts) }
         }
         SToggle(prefs, "Save every route's map", "mbautoroute", false, "When a route starts, its strip is saved in the background")
@@ -99,7 +99,7 @@ internal fun OfflineMapsContent(prefs: Prefs, engine: NavEngine) {
     }
 
     MapboxOfflineGroup(prefs, engine)
-    SGroup("Downloaded areas", footer = "Keep as many areas as you like: the one you're in is used automatically (routes work offline within one area). Each is a snapshot of the roads on the day it was built, so update now and then." + if (free >= 0) " ${fmtSize(free)} free." else "") {
+    SGroup("Downloaded areas", footer = "Keep as many areas as you like: the one you're in is used automatically (routes work offline within one area). Each is a snapshot of the roads on the day it was built, so update now and then." + if (free >= 0) " ว่าง ${fmtSize(free)}" else "") {
         if (have.isEmpty()) SNote("Nothing downloaded yet. Pick an area below and download it on Wi-Fi.")
         for (id in have) {
             val r = PackRegions.byId(id)
@@ -108,7 +108,7 @@ internal fun OfflineMapsContent(prefs: Prefs, engine: NavEngine) {
             val built = if (tiles.exists()) java.text.SimpleDateFormat("d MMM yyyy", java.util.Locale.UK).format(java.util.Date(tiles.lastModified())) else ""
             val inUse = id == activeId
             val hasLimits = File(d, "limits.bin").exists()
-            SItem(r.name + if (inUse) " · in use" else "", (sizes[id]?.let { fmtSize(it) } ?: "…") + (if (built.isNotEmpty()) " · built $built" else "") +
+            SItem(r.name + if (inUse) " · in use" else "", (sizes[id]?.let { fmtSize(it) } ?: "…") + (if (built.isNotEmpty()) " · ข้อมูลวันที่ $built" else "") +
                 (if (hasLimits) " · speed limits and cameras offline" else "")) {
                 if (confirmDelete == id) {
                     SButton("Yes, delete", danger = true) { confirmDelete = null; engine.deletePack(id) }
@@ -121,14 +121,14 @@ internal fun OfflineMapsContent(prefs: Prefs, engine: NavEngine) {
             }
         }
         for (id in extrasReady) if (engine.packDownloading != id)
-            SNote("Offline speed limits and cameras are now ready for ${PackRegions.byId(id).name}: tap its Update (only the new files download, usually under 100 MB).")
+            SNote("ข้อมูลความเร็วและกล้องออฟไลน์ของ ${PackRegions.byId(id).name} พร้อมแล้ว แตะอัปเดตเพื่อดาวน์โหลดเฉพาะไฟล์ใหม่ โดยปกติน้อยกว่า 100 MB")
         val age = engine.packAgeDays()
-        if (age != null && age >= 120 && !engine.packBusy) SNote("The area in use is about ${age / 30} months old. Update it on Wi-Fi to pick up new roads and junction changes.")
+        if (age != null && age >= 120 && !engine.packBusy) SNote("ข้อมูลพื้นที่ที่ใช้เก่าประมาณ ${age / 30} เดือน อัปเดตผ่าน Wi-Fi เพื่อรับถนนและทางแยกใหม่")
     }
     SGroup("Add an area") {
         SItem("Area", region.name + " · " + region.group) { SButton("Change") { picking = true } }
-        if (region.id !in have && avail == false) SNote("The ${region.name} pack hasn't been built yet, so it can't be downloaded at the moment.")
-        SItem(if (region.id in have) "${region.name} is already downloaded" else "Download ${region.name}", "Best done on Wi-Fi: a country is usually 1 to 4 GB") {
+        if (region.id !in have && avail == false) SNote("ยังไม่ได้สร้างชุดแผนที่ ${region.name} จึงยังดาวน์โหลดไม่ได้")
+        SItem(if (region.id in have) "ดาวน์โหลด ${region.name} แล้ว" else "ดาวน์โหลด ${region.name}", "Best done on Wi-Fi: a country is usually 1 to 4 GB") {
             SButton(if (engine.packBusy) "Downloading…" else if (region.id in have) "Update" else "Download", primary = true) { engine.downloadRegion(region) }
         }
         if (engine.packBusy) LinearProgressIndicator(color = c.accent, trackColor = c.tile, modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp))

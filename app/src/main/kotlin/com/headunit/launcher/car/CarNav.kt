@@ -129,7 +129,7 @@ class CarNavSession : Session() {
                     q.equals("home", true) && e.places.slot("home") != null -> e.startRoute(e.places.slot("home")!!)
                     q.equals("work", true) && e.places.slot("work") != null -> e.startRoute(e.places.slot("work")!!)
                     q.isNotEmpty() -> ms.screenManager.push(SearchScreen(carContext, holder, q))
-                    else -> try { androidx.car.app.CarToast.makeText(carContext, "Couldn't read a place from that", androidx.car.app.CarToast.LENGTH_LONG).show() } catch (x: Exception) { }
+                    else -> try { androidx.car.app.CarToast.makeText(carContext, com.headunit.launcher.Thai.text("Couldn't read a place from that"), androidx.car.app.CarToast.LENGTH_LONG).show() } catch (x: Exception) { }
                 }
             }
         }.apply { isDaemon = true; name = "car-nav-intent" }
@@ -474,7 +474,7 @@ class MapScreen(carContext: CarContext, private val holder: CarHolder) : Screen(
             try {
                 if (guiding) {
                     nav?.navigationStarted()
-                    try { NavService.start(holder.carContext.applicationContext, "Navigating to ${e.dest?.name ?: "your destination"}") } catch (x: Exception) { }
+                    try { NavService.start(holder.carContext.applicationContext, "กำลังนำทางไป ${e.dest?.name ?: "your destination"}") } catch (x: Exception) { }
                 } else {
                     nav?.navigationEnded()
                     // (the phone may still be guiding a trip of its own: then its background GPS service stays on)
@@ -499,7 +499,7 @@ class MapScreen(carContext: CarContext, private val holder: CarHolder) : Screen(
     private fun icon(res: Int) = CarIcon.Builder(IconCompat.createWithResource(carContext, res)).build()
 
     /** Report (police, crash, hazard...): opens the "Report here" screen. It has the Search button's place. */
-    private fun reportAction(): Action = Action.Builder().setTitle("Report")
+    private fun reportAction(): Action = Action.Builder().setTitle(com.headunit.launcher.Thai.text("Report"))
         .setOnClickListener { screenManager.push(ReportScreen(carContext, holder)) }.build()
 
     override fun onGetTemplate(): Template {
@@ -509,11 +509,11 @@ class MapScreen(carContext: CarContext, private val holder: CarHolder) : Screen(
         val previewing = e != null && e.route != null && e.previewing
         if (previewing) {
             // the route choice (drawn by the app on the map): start, try the next route, or cancel
-            strip.addAction(Action.Builder().setTitle("Start").setOnClickListener { e?.beginNavigation(); invalidate() }.build())
-            if ((e?.routes?.size ?: 0) > 1) strip.addAction(Action.Builder().setTitle("Next route").setOnClickListener {
+            strip.addAction(Action.Builder().setTitle(com.headunit.launcher.Thai.text("Start")).setOnClickListener { e?.beginNavigation(); invalidate() }.build())
+            if ((e?.routes?.size ?: 0) > 1) strip.addAction(Action.Builder().setTitle(com.headunit.launcher.Thai.text("Next route")).setOnClickListener {
                 e?.let { en -> en.selectRoute((en.active + 1) % en.routes.size.coerceAtMost(3)) }; invalidate()
             }.build())
-            strip.addAction(Action.Builder().setTitle("Cancel").setOnClickListener { e?.endRoute(); invalidate() }.build())
+            strip.addAction(Action.Builder().setTitle(com.headunit.launcher.Thai.text("Cancel")).setOnClickListener { e?.endRoute(); invalidate() }.build())
             return NavigationTemplate.Builder().setActionStrip(strip.build()).build()
         }
         val taps = carContext.carAppApiLevel >= 5
@@ -521,19 +521,19 @@ class MapScreen(carContext: CarContext, private val holder: CarHolder) : Screen(
         val soundIcon = when (e?.soundMode ?: 0) { 0 -> R.drawable.ic_car_sound_on; 1 -> R.drawable.ic_car_sound_alerts; else -> R.drawable.ic_car_sound_off }
         val sound = Action.Builder().setIcon(icon(soundIcon)).setOnClickListener { e?.cycleSound(); invalidate() }.build()
         // 2D / 3D (as the app's own button): the title says which view a tap switches to
-        val view = Action.Builder().setTitle(if (e?.tilt3d != false) "2D" else "3D").setOnClickListener { e?.toggleTilt(); invalidate() }.build()
+        val view = Action.Builder().setTitle(com.headunit.launcher.Thai.text(if (e?.tilt3d != false) "2D" else "3D")).setOnClickListener { e?.toggleTilt(); invalidate() }.build()
         val demoOn = e != null && (e.prefs.b(PreferenceKeys.DEMO, false) || e.simMode != 0)
         val fr = e?.faster
         if (guiding && fr != null) {
             // a faster route turned up: switch or keep (also on the map card, for cars that pass taps on)
-            strip.addAction(Action.Builder().setTitle("Switch −${fr.savedMin} min").setOnClickListener { e?.acceptFaster(); invalidate() }.build())
-            strip.addAction(Action.Builder().setTitle("Keep").setOnClickListener { e?.dismissFaster(); invalidate() }.build())
+            strip.addAction(Action.Builder().setTitle(com.headunit.launcher.Thai.text("เปลี่ยน −${fr.savedMin} นาที")).setOnClickListener { e?.acceptFaster(); invalidate() }.build())
+            strip.addAction(Action.Builder().setTitle(com.headunit.launcher.Thai.text("Keep")).setOnClickListener { e?.dismissFaster(); invalidate() }.build())
             strip.addAction(sound)
         } else if (guiding) {
-            strip.addAction(Action.Builder().setTitle("Stop").setOnClickListener { e?.endRoute(); invalidate() }.build())
+            strip.addAction(Action.Builder().setTitle(com.headunit.launcher.Thai.text("Stop")).setOnClickListener { e?.endRoute(); invalidate() }.build())
             // the demo drive (for trying it out parked; only with Demo switched on in Settings, as in the app): starts it, speeds it
             // up, stops it. Otherwise that space is the 2D / 3D button
-            if (demoOn) strip.addAction(Action.Builder().setTitle(when (e?.simMode ?: 0) { 0 -> "Demo"; 1 -> "Faster"; else -> "End demo" })
+            if (demoOn) strip.addAction(Action.Builder().setTitle(com.headunit.launcher.Thai.text(when (e?.simMode ?: 0) { 0 -> "Demo"; 1 -> "Faster"; else -> "End demo" }))
                 .setOnClickListener { e?.cycleSim(); invalidate() }.build())
             else strip.addAction(view)
             strip.addAction(sound)
@@ -546,7 +546,7 @@ class MapScreen(carContext: CarContext, private val holder: CarHolder) : Screen(
         } else {
             // cars that don't pass taps on: Report has the Search button's place, and Search is the first row in Places
             strip.addAction(reportAction())
-            strip.addAction(Action.Builder().setTitle("Places").setOnClickListener { screenManager.push(PlacesScreen(carContext, holder)) }.build())
+            strip.addAction(Action.Builder().setTitle(com.headunit.launcher.Thai.text("Places")).setOnClickListener { screenManager.push(PlacesScreen(carContext, holder)) }.build())
             strip.addAction(view)
             strip.addAction(Action.Builder().setIcon(icon(R.drawable.ic_car_settings)).setOnClickListener { openSettings() }.build())
         }
@@ -717,7 +717,7 @@ class MapScreen(carContext: CarContext, private val holder: CarHolder) : Screen(
             val mb = Maneuver.Builder(type).setIcon(CarIcon.Builder(IconCompat.createWithResource(ctx, maneuverIcon(type))).build())
             if (type == Maneuver.TYPE_ROUNDABOUT_ENTER_AND_EXIT_CW || type == Maneuver.TYPE_ROUNDABOUT_ENTER_AND_EXIT_CCW) mb.setRoundaboutExitNumber(t.exit.coerceAtLeast(1))
             val what = when {
-                type == Maneuver.TYPE_ROUNDABOUT_ENTER_AND_EXIT_CW || type == Maneuver.TYPE_ROUNDABOUT_ENTER_AND_EXIT_CCW -> "Take exit ${t.exit}"
+                type == Maneuver.TYPE_ROUNDABOUT_ENTER_AND_EXIT_CW || type == Maneuver.TYPE_ROUNDABOUT_ENTER_AND_EXIT_CCW -> "ใช้ทางออก ${t.exit}"
                 m.startsWith("ARRIVE") -> "Arrive"
                 t.tag.isNotBlank() -> t.tag
                 else -> m.lowercase().replace('_', ' ').replaceFirstChar { it.uppercase() }
@@ -773,7 +773,7 @@ class PlacesScreen(carContext: CarContext, private val holder: CarHolder) : Scre
         // Search first: on cars that don't pass taps on to the map, this is the way in to it (the Search button is Report now)
         var shownRows = 0
         if (e != null) {
-            list.addItem(Row.Builder().setTitle("Search").addText("Type or say where to")
+            list.addItem(Row.Builder().setTitle(com.headunit.launcher.Thai.text("Search")).addText(com.headunit.launcher.Thai.text("Type or say where to"))
                 .setImage(rowIcon(carContext, R.drawable.ic_car_search, 0xFF9CA4BF.toInt()))
                 .setOnClickListener { screenManager.push(SearchScreen(carContext, holder)) }.build())
             shownRows = 1
@@ -790,16 +790,16 @@ class PlacesScreen(carContext: CarContext, private val holder: CarHolder) : Scre
             for ((label, p, ic) in all) {
                 if (!seen.add("%.4f,%.4f".format(p.pos.lat, p.pos.lon))) continue
                 if (seen.size + shownRows > limit.coerceIn(1, 12)) break
-                val r = Row.Builder().setTitle(label).setImage(rowIcon(carContext, ic.first, ic.second))
+                val r = Row.Builder().setTitle(com.headunit.launcher.Thai.text(label)).setImage(rowIcon(carContext, ic.first, ic.second))
                 val sub = if (label == p.name) p.sub else p.name
                 val d = distFrom(e, p)
                 val line = listOf(d, sub).filter { it.isNotBlank() }.joinToString(" · ")
-                if (line.isNotBlank()) r.addText(line)
+                if (line.isNotBlank()) r.addText(com.headunit.launcher.Thai.text(line))
                 r.setOnClickListener { go(e, p) }
                 list.addItem(r.build())
             }
         }
-        return ListTemplate.Builder().setTitle("Places").setHeaderAction(Action.BACK).setSingleList(list.build()).build()
+        return ListTemplate.Builder().setTitle(com.headunit.launcher.Thai.text("Places")).setHeaderAction(Action.BACK).setSingleList(list.build()).build()
     }
 
     private fun go(e: NavEngine, p: Place) {
@@ -820,10 +820,10 @@ class ReportScreen(carContext: CarContext, private val holder: CarHolder) : Scre
         )
         val list = ItemList.Builder()
         for ((kind, label, ic) in kinds) list.addItem(
-            GridItem.Builder().setTitle(label).setImage(rowIcon(carContext, ic.first, ic.second), GridItem.IMAGE_TYPE_LARGE)
+            GridItem.Builder().setTitle(com.headunit.launcher.Thai.text(label)).setImage(rowIcon(carContext, ic.first, ic.second), GridItem.IMAGE_TYPE_LARGE)
                 .setOnClickListener { send(kind) }.build()
         )
-        return GridTemplate.Builder().setTitle("Report here").setHeaderAction(Action.BACK).setSingleList(list.build()).build()
+        return GridTemplate.Builder().setTitle(com.headunit.launcher.Thai.text("Report here")).setHeaderAction(Action.BACK).setSingleList(list.build()).build()
     }
 
     private fun send(kind: String) {
@@ -834,11 +834,11 @@ class ReportScreen(carContext: CarContext, private val holder: CarHolder) : Scre
             else -> null
         }
         if (msg != null || e == null) {
-            try { androidx.car.app.CarToast.makeText(carContext, msg ?: "", androidx.car.app.CarToast.LENGTH_SHORT).show() } catch (x: Exception) { }
+            try { androidx.car.app.CarToast.makeText(carContext, com.headunit.launcher.Thai.text(msg ?: ""), androidx.car.app.CarToast.LENGTH_SHORT).show() } catch (x: Exception) { }
             return
         }
         try { e.report(kind) } catch (x: Exception) { }
-        try { androidx.car.app.CarToast.makeText(carContext, "${e.reportName(kind)} report saved here", androidx.car.app.CarToast.LENGTH_SHORT).show() } catch (x: Exception) { }
+        try { androidx.car.app.CarToast.makeText(carContext, com.headunit.launcher.Thai.text("บันทึกรายงาน ${e.reportName(kind)} ที่นี่แล้ว"), androidx.car.app.CarToast.LENGTH_SHORT).show() } catch (x: Exception) { }
         screenManager.pop()
     }
 }
@@ -874,7 +874,7 @@ class SearchScreen(carContext: CarContext, private val holder: CarHolder, initia
             // a red pin, the name, and how far it is with the address under it (as in the app's results)
             val r = Row.Builder().setTitle(p.name).setImage(rowIcon(carContext, R.drawable.ic_car_pin, 0xFFEA4335.toInt()))
             val line = listOf(distFrom(e, p), p.sub).filter { it.isNotBlank() }.joinToString(" · ")
-            if (line.isNotBlank()) r.addText(line)
+            if (line.isNotBlank()) r.addText(com.headunit.launcher.Thai.text(line))
             r.setOnClickListener { e?.startRoute(p); screenManager.popToRoot() }
             list.addItem(r.build())
         }
@@ -886,7 +886,7 @@ class SearchScreen(carContext: CarContext, private val holder: CarHolder, initia
                 if (searchText.length >= 3) handler.postDelayed(typed, 500)
             }
             override fun onSearchSubmitted(searchText: String) { query = searchText; handler.removeCallbacks(typed); e?.search(searchText) }
-        }).setHeaderAction(Action.BACK).setSearchHint("Search for a place").setInitialSearchText(query)
+        }).setHeaderAction(Action.BACK).setSearchHint(com.headunit.launcher.Thai.text("Search for a place")).setInitialSearchText(query)
             .setShowKeyboardByDefault(query.isEmpty()).setItemList(list.build()).build()
     }
 }
@@ -924,7 +924,7 @@ class NearbyScreen(carContext: CarContext, private val holder: CarHolder, privat
         val e = holder.engine
         val items = holder.engine?.nearby ?: emptyList()
         val busy = holder.engine?.nearbyBusy ?: false
-        val b = ListTemplate.Builder().setTitle(title).setHeaderAction(Action.BACK)
+        val b = ListTemplate.Builder().setTitle(com.headunit.launcher.Thai.text(title)).setHeaderAction(Action.BACK)
         if (busy && items.isEmpty()) return b.setLoading(true).build()
         val limit = try { carContext.getCarService(ConstraintManager::class.java).getContentLimit(ConstraintManager.CONTENT_LIMIT_TYPE_LIST) } catch (x: Exception) { 6 }
         val list = ItemList.Builder().setNoItemsMessage("Nothing found nearby")
@@ -933,9 +933,9 @@ class NearbyScreen(carContext: CarContext, private val holder: CarHolder, privat
             val bits = ArrayList<String>()
             bits += com.headunit.launcher.Geo.fmtDist(n.dist, e?.imperial ?: true)
             n.price?.let { bits += String.format(java.util.Locale.UK, "%.1fp", it) }
-            if (n.detourMin >= 0) bits += "+${n.detourMin} min"
+            if (n.detourMin >= 0) bits += "+${n.detourMin} นาที"
             if (n.extra.isNotBlank()) bits += n.extra
-            r.addText(bits.joinToString(" · "))
+            r.addText(com.headunit.launcher.Thai.text(bits.joinToString(" · ")))
             if (n.place.sub.isNotBlank()) r.addText(n.place.sub)
             r.setOnClickListener {
                 val en = holder.engine ?: return@setOnClickListener
@@ -957,8 +957,8 @@ class CarSettingsScreen(carContext: CarContext, private val holder: CarHolder, p
     private val prefs = Prefs(carContext.applicationContext)
 
     private fun toggleRow(title: String, key: String, def: Boolean, sub: String?, after: (Boolean) -> Unit = {}): Row {
-        val r = Row.Builder().setTitle(title)
-        if (sub != null) r.addText(sub)
+        val r = Row.Builder().setTitle(com.headunit.launcher.Thai.text(title))
+        if (sub != null) r.addText(com.headunit.launcher.Thai.text(sub))
         r.setToggle(Toggle.Builder { on -> prefs.put(key, on); after(on); invalidate() }.setChecked(prefs.b(key, def)).build())
         return r.build()
     }
@@ -968,13 +968,13 @@ class CarSettingsScreen(carContext: CarContext, private val holder: CarHolder, p
         val limit = try { carContext.getCarService(ConstraintManager::class.java).getContentLimit(ConstraintManager.CONTENT_LIMIT_TYPE_LIST) } catch (x: Exception) { 6 }
         val rows = ArrayList<Row>()
         val sm = e?.soundMode ?: prefs.i(PreferenceKeys.SOUND_MODE, 0)
-        rows += Row.Builder().setTitle("Voice guidance")
-            .addText(listOf("All directions and alerts", "Alerts only (cameras, limits, hazards)", "Off")[sm.coerceIn(0, 2)])
+        rows += Row.Builder().setTitle(com.headunit.launcher.Thai.text("Voice guidance"))
+            .addText(com.headunit.launcher.Thai.text(listOf("All directions and alerts", "Alerts only (cameras, limits, hazards)", "Off")[sm.coerceIn(0, 2)]))
             .setImage(CarIcon.Builder(IconCompat.createWithResource(carContext, when (sm) { 0 -> R.drawable.ic_car_sound_on; 1 -> R.drawable.ic_car_sound_alerts; else -> R.drawable.ic_car_sound_off })).build())
             .setOnClickListener { if (e != null) e.cycleSound() else prefs.put(PreferenceKeys.SOUND_MODE, (sm + 1) % 3); invalidate() }.build()
         val th = prefs.s(PreferenceKeys.CARTHEME, "car")
-        rows += Row.Builder().setTitle("Day and night")
-            .addText(when (th) { "day" -> "Always day"; "night" -> "Always night"; else -> "Follows the car" })
+        rows += Row.Builder().setTitle(com.headunit.launcher.Thai.text("Day and night"))
+            .addText(com.headunit.launcher.Thai.text(when (th) { "day" -> "Always day"; "night" -> "Always night"; else -> "Follows the car" }))
             .setOnClickListener {
                 prefs.put(PreferenceKeys.CARTHEME, when (th) { "car" -> "day"; "day" -> "night"; else -> "car" })
                 onTheme(); invalidate()
@@ -982,8 +982,8 @@ class CarSettingsScreen(carContext: CarContext, private val holder: CarHolder, p
         // Android Auto's templated UI does not expose a native continuous slider here,
         // so these map-accessible controls step through sensible values on each tap.
         val uiScale = prefs.i(PreferenceKeys.CARSCALE, 100).coerceIn(40, 300)
-        rows += Row.Builder().setTitle("Map UI scale")
-            .addText("${uiScale}% · tap to cycle from 40% to 300%")
+        rows += Row.Builder().setTitle(com.headunit.launcher.Thai.text("Map UI scale"))
+            .addText(com.headunit.launcher.Thai.text("${uiScale}% · แตะเพื่อเปลี่ยนขนาด 40% ถึง 300%"))
             .setOnClickListener {
                 val levels = listOf(40, 60, 80, 100, 120, 140, 160, 180, 200, 225, 250, 275, 300)
                 val next = levels[(levels.indexOf(uiScale).takeIf { it >= 0 } ?: 3).let { (it + 1) % levels.size }]
@@ -991,8 +991,8 @@ class CarSettingsScreen(carContext: CarContext, private val holder: CarHolder, p
                 invalidate()
             }.build()
         val arrowScale = (prefs.s(PreferenceKeys.ARROW_PERCENT, "240").toIntOrNull() ?: 240).coerceIn(100, 500)
-        rows += Row.Builder().setTitle("Locator arrow scale")
-            .addText("${arrowScale}% · tap to increase; resets after 300%")
+        rows += Row.Builder().setTitle(com.headunit.launcher.Thai.text("Locator arrow scale"))
+            .addText(com.headunit.launcher.Thai.text("${arrowScale}% · แตะเพื่อขยาย กลับค่าเดิมเมื่อเกิน 300%"))
             .setOnClickListener {
                 val next = when (arrowScale) { in 0..149 -> 150; in 150..199 -> 200; in 200..249 -> 250; in 250..299 -> 300; else -> 100 }
                 prefs.put(PreferenceKeys.ARROW_PERCENT, next)
@@ -1007,6 +1007,6 @@ class CarSettingsScreen(carContext: CarContext, private val holder: CarHolder, p
         rows += toggleRow("Avoid ferries", "avoid_ferry", false, null, reroute)
         val list = ItemList.Builder()
         for (r in rows.take(limit.coerceIn(1, 12))) list.addItem(r)
-        return ListTemplate.Builder().setTitle("Settings").setHeaderAction(Action.BACK).setSingleList(list.build()).build()
+        return ListTemplate.Builder().setTitle(com.headunit.launcher.Thai.text("Settings")).setHeaderAction(Action.BACK).setSingleList(list.build()).build()
     }
 }

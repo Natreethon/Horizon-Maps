@@ -127,7 +127,7 @@ private fun SettingsBody(prefs: Prefs, engine: NavEngine, onClose: () -> Unit) {
     val words = query.trim().lowercase().split(Regex("\\s+")).filter { it.isNotBlank() }
     val matches = remember(query) {
         if (words.isEmpty()) emptyList() else settingsIndex.filter { r ->
-            val hay = (r.title + " " + r.sub + " " + r.group + " " + sections[r.section].title).lowercase()
+            val hay = listOf(r.title, r.sub, r.group, sections[r.section].title).joinToString(" ") { it + " " + com.headunit.launcher.Thai.text(it) }.lowercase()
             words.all { hay.contains(it) }
         }.sortedBy { if (it.title.lowercase().startsWith(words[0])) 0 else if (it.title.lowercase().contains(words[0])) 1 else 2 }.take(40)
     }
@@ -141,7 +141,7 @@ private fun SettingsBody(prefs: Prefs, engine: NavEngine, onClose: () -> Unit) {
                 Box(Modifier.size(46.dp).clip(CircleShape).background(c.tile).pressClick(onClose), contentAlignment = Alignment.Center) {
                     Icon(Icons.Rounded.ArrowBack, "Back to the map", tint = c.text, modifier = Modifier.size(24.dp))
                 }
-                Text("Settings", color = c.text, fontSize = 24.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(start = 14.dp))
+                Text(com.headunit.launcher.Thai.text("Settings"), color = c.text, fontSize = 24.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(start = 14.dp))
             }
             // search every setting by name
             Row(
@@ -150,7 +150,7 @@ private fun SettingsBody(prefs: Prefs, engine: NavEngine, onClose: () -> Unit) {
             ) {
                 Icon(Icons.Rounded.Search, null, tint = c.sub, modifier = Modifier.size(20.dp))
                 Box(Modifier.weight(1f).padding(start = 10.dp), contentAlignment = Alignment.CenterStart) {
-                    if (query.isEmpty()) Text("Search settings", color = c.sub, fontSize = 15.sp)
+                    if (query.isEmpty()) Text(com.headunit.launcher.Thai.text("Search settings"), color = c.sub, fontSize = 15.sp)
                     androidx.compose.foundation.text.BasicTextField(
                         value = query, onValueChange = { query = it; highlight = null }, singleLine = true,
                         textStyle = androidx.compose.ui.text.TextStyle(color = c.text, fontSize = 15.sp),
@@ -163,20 +163,20 @@ private fun SettingsBody(prefs: Prefs, engine: NavEngine, onClose: () -> Unit) {
                 if (query.isNotEmpty()) Icon(Icons.Rounded.Close, "Clear", tint = c.sub, modifier = Modifier.size(20.dp).clickable { query = ""; focus.clearFocus() })
             }
             if (words.isNotEmpty()) {
-                if (matches.isEmpty()) Text("Nothing matches \"${query.trim()}\"", color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(10.dp))
+                if (matches.isEmpty()) Text(com.headunit.launcher.Thai.text("ไม่พบผลลัพธ์สำหรับ \"${query.trim()}\""), color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(10.dp))
                 matches.forEach { r ->
                     Column(
                         Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).clickable {
                             cat = r.section; highlight = r.title; query = ""; focus.clearFocus(); showList = false
                         }.padding(horizontal = 12.dp, vertical = 9.dp),
                     ) {
-                        Text(r.title, color = c.text, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, maxLines = 2, overflow = TextOverflow.Ellipsis)
-                        Text(sections[r.section].title + (if (r.group.isNotBlank()) " · " + r.group else ""), color = c.sub, fontSize = 11.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(com.headunit.launcher.Thai.text(r.title), color = c.text, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                        Text(com.headunit.launcher.Thai.text(sections[r.section].title + (if (r.group.isNotBlank()) " · " + r.group else "")), color = c.sub, fontSize = 11.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                 }
             } else sections.forEachIndexed { i, s ->
                 // the small group headings in the list: Map, Driving, You, Device
-                if (s.heading != null) Text(s.heading, color = c.sub, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.4.sp,
+                if (s.heading != null) Text(com.headunit.launcher.Thai.text(s.heading), color = c.sub, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.4.sp,
                     modifier = Modifier.padding(start = 14.dp, top = if (i == 0) 2.dp else 12.dp, bottom = 2.dp))
                 val on = i == cat
                 val rowBg by androidx.compose.animation.animateColorAsState(if (on) c.accent.copy(alpha = 0.16f) else Color.Transparent, androidx.compose.animation.core.tween(200), label = "secBg")
@@ -188,7 +188,7 @@ private fun SettingsBody(prefs: Prefs, engine: NavEngine, onClose: () -> Unit) {
                         Icon(s.icon, null, tint = s.tint, modifier = Modifier.size(21.dp))
                     }
                     Column(Modifier.padding(start = 12.dp)) {
-                        Text(s.title, color = if (on) c.accent else c.text, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                        Text(com.headunit.launcher.Thai.text(s.title), color = if (on) c.accent else c.text, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
                         Text(s.sub, color = c.sub, fontSize = 11.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                 }
@@ -211,9 +211,9 @@ private fun SettingsBody(prefs: Prefs, engine: NavEngine, onClose: () -> Unit) {
                     Box(Modifier.size(42.dp).clip(CircleShape).background(c.tile), contentAlignment = Alignment.Center) {
                         Icon(Icons.Rounded.ArrowBack, "All settings", tint = c.text, modifier = Modifier.size(22.dp))
                     }
-                    Text("Settings", color = c.sub, fontSize = 15.sp, modifier = Modifier.padding(start = 10.dp))
+                    Text(com.headunit.launcher.Thai.text("Settings"), color = c.sub, fontSize = 15.sp, modifier = Modifier.padding(start = 10.dp))
                 }
-                Text(sections[cat].title, color = c.text, fontSize = 28.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(start = 6.dp, top = 6.dp))
+                Text(com.headunit.launcher.Thai.text(sections[cat].title), color = c.text, fontSize = 28.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(start = 6.dp, top = 6.dp))
                 Text(sections[cat].sub, color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(start = 6.dp, bottom = 16.dp))
                 Column(Modifier.widthIn(max = 820.dp)) {
                     when (cat) {
@@ -317,9 +317,9 @@ private fun ArrowSection(prefs: Prefs, engine: NavEngine) {
         val hasPic = prefs.s(PreferenceKeys.LOCATOR_IMAGE, "").isNotBlank() && java.io.File(ctx.filesDir, "locator.png").exists()
         val pickPic = rememberLocatorImagePicker { ok ->
             if (ok) { prefs.put(PreferenceKeys.LOCATOR_IMAGE, System.currentTimeMillis().toString()); prefs.put(PreferenceKeys.LOCATOR, "custom") }
-            else android.widget.Toast.makeText(ctx, "Couldn't read that picture (try a PNG or JPG)", android.widget.Toast.LENGTH_SHORT).show()
+            else android.widget.Toast.makeText(ctx, com.headunit.launcher.Thai.text("Couldn't read that picture (try a PNG or JPG)"), android.widget.Toast.LENGTH_SHORT).show()
         }
-        fun choosePic() { if (!pickPic()) android.widget.Toast.makeText(ctx, "No app on this unit can pick a picture (try installing a file manager or gallery)", android.widget.Toast.LENGTH_LONG).show() }
+        fun choosePic() { if (!pickPic()) android.widget.Toast.makeText(ctx, com.headunit.launcher.Thai.text("No app on this unit can pick a picture (try installing a file manager or gallery)"), android.widget.Toast.LENGTH_LONG).show() }
         SChoice("Locator", listOf("arrow" to "3D arrow", "car" to "Car", "model" to "Real 3D model", "flat" to "Flat arrow", "custom" to "Your picture"), loc) {
             if (it == "custom" && !hasPic) choosePic() else prefs.put(PreferenceKeys.LOCATOR, it)
         }
@@ -353,7 +353,7 @@ private fun ArrowSection(prefs: Prefs, engine: NavEngine) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         if (pic != null) androidx.compose.foundation.Image(pic, name, Modifier.size(80.dp))
-                        Text(name, color = LocalVw.current.text, fontSize = 12.sp)
+                        Text(com.headunit.launcher.Thai.text(name), color = LocalVw.current.text, fontSize = 12.sp)
                     }
                 }
             }
@@ -548,7 +548,7 @@ private fun PlacesSection(engine: NavEngine) {
         mine.forEachIndexed { i, lp ->
             if (renaming == lp.label) {
                 var t by remember(lp.label) { mutableStateOf(lp.label) }
-                SItem("Rename ${lp.label}") {
+                SItem("เปลี่ยนชื่อ ${lp.label}") {
                     SField(t, { t = it.take(24) }, width = 220.dp)
                     SButton("Save", primary = true) { pl.renameCustom(lp.label, t); renaming = null }
                 }
@@ -571,14 +571,14 @@ private fun PlacesSection(engine: NavEngine) {
             when {
                 renamingFav == f -> {
                     var t by remember(f) { mutableStateOf(f.name) }
-                    SItem("Rename ${f.name}") {
+                    SItem("เปลี่ยนชื่อ ${f.name}") {
                         SField(t, { t = it.take(40) }, width = 220.dp)
                         SButton("Save", primary = true) { pl.renameFavourite(f, t); renamingFav = null }
                     }
                 }
-                slotFor == f -> SItem("Make ${f.name}…") {
-                    SButton("Home", primary = true) { pl.setSlot("home", f); slotFor = null; engine.toast("${f.name} is now Home", 2500) }
-                    SButton("Work", primary = true) { pl.setSlot("work", f); slotFor = null; engine.toast("${f.name} is now Work", 2500) }
+                slotFor == f -> SItem("ตั้ง ${f.name} เป็น…") {
+                    SButton("Home", primary = true) { pl.setSlot("home", f); slotFor = null; engine.toast("ตั้ง ${f.name} เป็นบ้านแล้ว", 2500) }
+                    SButton("Work", primary = true) { pl.setSlot("work", f); slotFor = null; engine.toast("ตั้ง ${f.name} เป็นที่ทำงานแล้ว", 2500) }
                     SButton("Cancel") { slotFor = null }
                 }
                 else -> SItem(f.name, f.sub) {
@@ -592,7 +592,7 @@ private fun PlacesSection(engine: NavEngine) {
     }
     SGroup("History", footer = "Swipe a place sideways on the Saved & recent list to take it off.") {
         SToggle(engine.prefs, "Saved & recent under the search bar", "quicklist", true, "The list of favourites and recent places on the map")
-        SItem("Recent destinations", "${pl.recents().size} recent, plus places remembered for searching without signal") {
+        SItem("Recent destinations", "สถานที่ล่าสุด ${pl.recents().size} แห่ง และสถานที่ที่เก็บไว้ค้นหาออฟไลน์") {
             SButton("Clear", danger = true) { pl.clearHistory(); engine.toast("History cleared", 2000) }
         }
     }
@@ -607,13 +607,13 @@ private fun TripsGroup(engine: NavEngine) {
     val unit = if (engine.imperial) "mph" else "km/h"
     SGroup("Trip log") {
         if (shown.isEmpty()) SNote("No trips yet. Every drive is recorded here when you park.")
-        else SItem("${shown.size} trips", Geo.fmtDist(shown.sumOf { it.dist }, engine.imperial) + " in all") { SButton("Clear", danger = true) { engine.trips.clear(); shown = emptyList() } }
+        else SItem("${shown.size} การเดินทาง", Geo.fmtDist(shown.sumOf { it.dist }, engine.imperial) + " in all") { SButton("Clear", danger = true) { engine.trips.clear(); shown = emptyList() } }
         shown.take(50).forEach { t ->
             val mins = ((t.end - t.start) / 60000L).toInt()
             SItem(
                 fmt.format(java.util.Date(t.start)) + (if (t.to.isNotBlank()) " → ${t.to}" else ""),
-                "${Geo.fmtDur(mins * 60.0)} · moving ${Geo.fmtDur(t.moving.toDouble())} · top ${Math.round(t.maxSpeed * k)} $unit",
-            ) { Text(Geo.fmtDist(t.dist, engine.imperial), color = LocalVw.current.text, fontSize = 16.sp, fontWeight = FontWeight.Bold) }
+                "${Geo.fmtDur(mins * 60.0)} · เคลื่อนที่ ${Geo.fmtDur(t.moving.toDouble())} · สูงสุด ${Math.round(t.maxSpeed * k)} $unit",
+            ) { Text(com.headunit.launcher.Thai.text(Geo.fmtDist(t.dist, engine.imperial)), color = LocalVw.current.text, fontSize = 16.sp, fontWeight = FontWeight.Bold) }
         }
     }
 }
@@ -632,10 +632,10 @@ private fun DefaultZoomRow(prefs: Prefs) {
             if (kotlin.math.abs(v) > 0.01f) SButton("Reset") { v = 0f; save(0f) }
         }
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Text("Further out", color = c.sub, fontSize = 13.sp)
+            Text(com.headunit.launcher.Thai.text("Further out"), color = c.sub, fontSize = 13.sp)
             androidx.compose.material3.Slider(value = v, onValueChange = { v = (Math.round(it * 4f) / 4f) }, onValueChangeFinished = { save(v) },
                 valueRange = -2f..2f, modifier = Modifier.weight(1f).padding(horizontal = 10.dp))
-            Text("Closer", color = c.sub, fontSize = 13.sp)
+            Text(com.headunit.launcher.Thai.text("Closer"), color = c.sub, fontSize = 13.sp)
         }
     }
 }
@@ -652,7 +652,7 @@ private fun PhoneLinkGroup(prefs: Prefs) {
     SGroup("Send places from your phone", footer = "Pair once: on the head unit, tap Pair a phone and type its code into Horizon Nav on your phone (in this same place). Then \"Send to car\" on the phone's route screen sends the place to the head unit, which starts it the next time it's on (within 12 hours). Places go through ntfy.sh, a free message relay, scrambled with your code so only your phone and car can read them.") {
         when {
             code.isNotBlank() && role == "car" -> {
-                SItem("This is the car", "Paired. Code ${com.headunit.launcher.CarLink.pretty(code)}: type it on another phone to add it too") {
+                SItem("This is the car", "จับคู่แล้ว รหัส ${com.headunit.launcher.CarLink.pretty(code)}: กรอกบนโทรศัพท์อีกเครื่องเพื่อเพิ่มได้") {
                     SButton("Unpair", danger = true) { prefs.put(PreferenceKeys.LINK_CODE, ""); prefs.put(PreferenceKeys.LINK_ROLE, ""); prefs.put(PreferenceKeys.LINK_LAST, "") }
                 }
                 val qr = remember(code) { donateQr(com.headunit.launcher.CarLink.pretty(code), 300) }
@@ -660,10 +660,10 @@ private fun PhoneLinkGroup(prefs: Prefs) {
                     Box(Modifier.size(110.dp).clip(RoundedCornerShape(12.dp)).background(Color.White).padding(6.dp)) {
                         androidx.compose.foundation.Image(qr, "The pairing code as a QR code", Modifier.size(98.dp), filterQuality = androidx.compose.ui.graphics.FilterQuality.None)
                     }
-                    Text(com.headunit.launcher.CarLink.pretty(code), color = LocalVw.current.text, fontSize = 26.sp, fontWeight = FontWeight.Bold, letterSpacing = 2.sp)
+                    Text(com.headunit.launcher.Thai.text(com.headunit.launcher.CarLink.pretty(code)), color = LocalVw.current.text, fontSize = 26.sp, fontWeight = FontWeight.Bold, letterSpacing = 2.sp)
                 }
             }
-            code.isNotBlank() && role == "phone" -> SItem("This is your phone", "Paired with your car (${com.headunit.launcher.CarLink.pretty(code)}). \"Send to car\" is on the route screen, next to Save") {
+            code.isNotBlank() && role == "phone" -> SItem("This is your phone", "จับคู่กับรถแล้ว (${com.headunit.launcher.CarLink.pretty(code)}) ปุ่ม \"ส่งไปยังรถ\" อยู่ในหน้าเส้นทางข้างปุ่มบันทึก") {
                 SButton("Unpair", danger = true) { prefs.put(PreferenceKeys.LINK_CODE, ""); prefs.put(PreferenceKeys.LINK_ROLE, "") }
             }
             else -> {
@@ -751,7 +751,7 @@ private fun OfflinePlacesGroup(engine: NavEngine) {
     val where = countryName(cc)
     var state by remember { mutableStateOf(if (OfflinePlaces.installed(ctx)) "Installed (%.1f MB)".format(OfflinePlaces.sizeMb(ctx)) else "Not downloaded") }
     var busy by remember { mutableStateOf(false) }
-    SGroup("Place names", footer = "A small download of towns and villages in $where, so you can search for them without signal even without the full pack.") {
+    SGroup("Place names", footer = "ดาวน์โหลดชื่อเมืองและหมู่บ้านใน $where ขนาดเล็ก เพื่อค้นหาออฟไลน์ได้แม้ไม่มีชุดแผนที่เต็ม") {
         SItem("Towns and villages", state) {
             SButton(if (busy) "Downloading…" else if (OfflinePlaces.installed(ctx)) "Update" else "Download", primary = !OfflinePlaces.installed(ctx)) {
                 if (!busy) {
@@ -759,8 +759,8 @@ private fun OfflinePlacesGroup(engine: NavEngine) {
                     sc.launch {
                         try {
                             val n = withContext(Dispatchers.IO) { OfflinePlaces.download(ctx, cc) }
-                            state = "Installed: $n places"; engine.toast("Offline places ready", 3000)
-                        } catch (e: Exception) { state = "Failed: ${e.message}" } finally { busy = false }
+                            state = "ติดตั้งแล้ว: $n สถานที่"; engine.toast("Offline places ready", 3000)
+                        } catch (e: Exception) { state = "ไม่สำเร็จ: ${e.message}" } finally { busy = false }
                     }
                 }
             }
@@ -782,7 +782,7 @@ private fun ScreenSection(prefs: Prefs, engine: NavEngine) {
         val autoScale = prefs.b(PreferenceKeys.UI_AUTO_SCALE, prefs.s(PreferenceKeys.UI_SCALE, "").isBlank())
         SItem(
             "Automatically scale UI",
-            if (autoScale) "Uses screen size and shape (currently $autoPercent%)" else "Manual text and button size is enabled"
+            if (autoScale) "ปรับตามขนาดและรูปทรงหน้าจอ ปัจจุบัน $autoPercent%" else "Manual text and button size is enabled"
         ) {
             Switch(checked = autoScale, onCheckedChange = { enabled ->
                 if (!enabled) prefs.put(PreferenceKeys.UI_SCALE, autoPercent)
@@ -851,7 +851,7 @@ private fun AndroidAutoSection(prefs: Prefs) {
                     "com.android.vending" -> "Google Play (Android Auto lists it without any extra steps)"
                     null -> "Unknown (installed from a file): needs Unknown sources in Android Auto"
                     ctx.packageName -> "Horizon Nav's own updater: needs Unknown sources in Android Auto"
-                    else -> "$inst: needs Unknown sources in Android Auto"
+                    else -> "$inst: ต้องเปิดแหล่งที่ไม่รู้จักใน Android Auto"
                 }
             } catch (e: Exception) { "Unknown" }
         }
@@ -886,7 +886,7 @@ private fun AndroidAutoSection(prefs: Prefs) {
             "Voice requests through Android Auto's own microphone may not reach apps from outside Google Play: use the app's search button instead.") {
             SButton("AAEnabler") {
                 try { ctx.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://github.com/malebuffy/AAEnabler")).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)) }
-                catch (e: Exception) { android.widget.Toast.makeText(ctx, "No browser on this device: search for AAEnabler on GitHub", android.widget.Toast.LENGTH_LONG).show() }
+                catch (e: Exception) { android.widget.Toast.makeText(ctx, com.headunit.launcher.Thai.text("No browser on this device: search for AAEnabler on GitHub"), android.widget.Toast.LENGTH_LONG).show() }
             }
         }
     }
@@ -946,7 +946,7 @@ private fun AboutSection(prefs: Prefs, engine: NavEngine) {
         if (com.headunit.launcher.Updater.enabled) {
             SItem("Check for updates", engine.updateStatus.ifBlank { null }) {
                 val u = engine.appUpdate
-                if (u != null && !engine.updateBusy) SButton("Update to ${u.version}", primary = true) { engine.installAppUpdate() }
+                if (u != null && !engine.updateBusy) SButton("อัปเดตเป็น ${u.version}", primary = true) { engine.installAppUpdate() }
                 else SButton(if (engine.updateBusy) "Updating…" else "Check now") { engine.checkForUpdate(manual = true) }
             }
             SToggle(prefs, "Look for updates by itself", "updcheck", true, "When the app opens and there's a connection (at most every half hour)")
@@ -969,16 +969,16 @@ private fun AboutSection(prefs: Prefs, engine: NavEngine) {
                 ctx.contentResolver.openOutputStream(uri)?.use { it.write(prefs.exportJson().toByteArray()) }
                 true
             } catch (e: Exception) { false }
-            android.widget.Toast.makeText(ctx, if (ok) "Backup saved" else "Could not save the backup", android.widget.Toast.LENGTH_SHORT).show()
+            android.widget.Toast.makeText(ctx, com.headunit.launcher.Thai.text(if (ok) "Backup saved" else "Could not save the backup"), android.widget.Toast.LENGTH_SHORT).show()
         }
     }
     val importer = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
         if (uri != null) {
             val msg = try {
                 val text = ctx.contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText() }.orEmpty()
-                "Restored ${prefs.importJson(text)} settings"
+                "กู้คืนการตั้งค่า ${prefs.importJson(text)} รายการแล้ว"
             } catch (e: Exception) { "That file is not a valid backup" }
-            android.widget.Toast.makeText(ctx, msg, android.widget.Toast.LENGTH_LONG).show()
+            android.widget.Toast.makeText(ctx, com.headunit.launcher.Thai.text(msg), android.widget.Toast.LENGTH_LONG).show()
         }
     }
     SGroup("Backup", footer = "Includes settings and saved places, not the API key or the offline pack. A backup from Horizon Launcher can be restored here too.") {
@@ -990,7 +990,7 @@ private fun AboutSection(prefs: Prefs, engine: NavEngine) {
     val cf = java.io.File(ctx.filesDir, "lastcrash.txt")
     var rep by remember { mutableStateOf(if (cf.exists()) cf.readText() else "") }
     if (rep.isNotBlank()) SGroup("Problem report", footer = "The app closed unexpectedly last time. Send a photo of this so it can be fixed.") {
-        Text(rep.take(900), color = LocalVw.current.text, fontSize = 10.sp, modifier = Modifier.padding(vertical = 6.dp))
+        Text(com.headunit.launcher.Thai.text(rep.take(900)), color = LocalVw.current.text, fontSize = 10.sp, modifier = Modifier.padding(vertical = 6.dp))
         SItem("Clear the report") { SButton("Clear") { cf.delete(); rep = "" } }
     }
 }
@@ -998,13 +998,13 @@ private fun AboutSection(prefs: Prefs, engine: NavEngine) {
 /** Readable name of a country code ("UK", "Norway"...). */
 internal fun countryName(cc: String): String = when (cc.uppercase()) {
     "GB" -> "UK"; "US" -> "US"; "" -> ""
-    else -> java.util.Locale("", cc).getDisplayCountry(java.util.Locale.UK).ifBlank { cc }
+    else -> com.headunit.launcher.Thai.country(cc).ifBlank { cc }
 }
 
 /** Search limited to the country you're in (followed as you travel) or anywhere. */
 internal fun searchCountryOptions(engine: NavEngine): List<Pair<String, String>> {
     val here = engine.detectedCountry
-    return listOf("auto" to (if (here.isNotBlank()) "${countryName(here)} only" else "My country only"), "" to "Anywhere")
+    return listOf("auto" to (if (here.isNotBlank()) "เฉพาะ ${countryName(here)}" else "My country only"), "" to "Anywhere")
 }
 
 internal fun searchCountryValue(prefs: Prefs): String = if (prefs.s(PreferenceKeys.COUNTRY, "auto").isBlank()) "" else "auto"
@@ -1020,10 +1020,10 @@ private fun FeedbackDialog(engine: NavEngine, onClose: () -> Unit) {
     var note by remember { mutableStateOf("") }
     androidx.compose.ui.window.Dialog(onDismissRequest = onClose) {
         Column(Modifier.widthIn(max = 560.dp).fillMaxWidth().clip(RoundedCornerShape(26.dp)).background(c.panel).padding(22.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            Text("Feedback or a problem", color = c.text, fontSize = 22.sp, fontWeight = FontWeight.Bold)
-            Text("What happened, or what would you like? Where you were and what you tapped helps.", color = c.sub, fontSize = 14.sp)
+            Text(com.headunit.launcher.Thai.text("Feedback or a problem"), color = c.text, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+            Text(com.headunit.launcher.Thai.text("What happened, or what would you like? Where you were and what you tapped helps."), color = c.sub, fontSize = 14.sp)
             SField(note, { note = it.take(600) }, placeholder = "e.g. Rerouted the wrong way near Southampton", width = 516.dp, fill = true)
-            Text("Sent with it: the app version, your head unit, the main settings, your downloaded areas and the last crash (no places or API keys).", color = c.sub, fontSize = 12.sp)
+            Text(com.headunit.launcher.Thai.text("Sent with it: the app version, your head unit, the main settings, your downloaded areas and the last crash (no places or API keys)."), color = c.sub, fontSize = 12.sp)
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)) {
                 SButton("Close") { onClose() }
                 SButton("Copy") {
@@ -1080,7 +1080,7 @@ private fun MapColoursPicker(value: String, onPick: (String) -> Unit) {
                         drawRect(col(3), topLeft = androidx.compose.ui.geometry.Offset(w * 0.36f, 0f), size = androidx.compose.ui.geometry.Size(w * 0.06f, h))
                         drawRect(androidx.compose.ui.graphics.Color(0xFF2A7BE4), topLeft = androidx.compose.ui.geometry.Offset(w * 0.68f, 0f), size = androidx.compose.ui.geometry.Size(w * 0.05f, h))
                     }
-                    Text(name, color = c.text, fontSize = 13.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp))
+                    Text(com.headunit.launcher.Thai.text(name), color = c.text, fontSize = 13.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp))
                 }
             }
         }

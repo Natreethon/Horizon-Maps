@@ -141,6 +141,11 @@ class MapBinding(private val ctx: Context, fast: Boolean = false, res: Float = 1
     private val BASE = "basemap"
 
     init {
+        // Set before MapView creation, also for engines created by Android Auto.
+        com.mapbox.common.SettingsServiceFactory.getInstance(
+            com.mapbox.common.SettingsServiceStorageType.PERSISTENT
+        ).set(com.mapbox.common.MapboxCommonSettings.LANGUAGE, Value(Thai.mapboxLanguage))
+
         // a placeholder until a real token is entered: the Mapbox map refuses to be created with no token at all
         if (MapboxOptions.accessToken.isBlank()) MapboxOptions.accessToken = NO_TOKEN
         val dens = ctx.resources.displayMetrics.density
@@ -154,7 +159,7 @@ class MapBinding(private val ctx: Context, fast: Boolean = false, res: Float = 1
         val opts = MapInitOptions(
             context = ctx,
             mapOptions = MapOptions.Builder().applyDefaultParams(ctx).pixelRatio(pr).build(),
-            cameraOptions = CameraOptions.Builder().center(Point.fromLngLat(-0.1276, 51.5072)).zoom(14.0).pitch(55.0).build(),
+            cameraOptions = CameraOptions.Builder().center(Point.fromLngLat(100.5018, 13.7563)).zoom(14.0).pitch(55.0).build(),
             // the phone moves the map between pages (texture view, can be clipped to round corners); the car draws straight to a surface
             textureView = !fast,
             // no style yet: it's chosen by the engine (and needs a token first)
@@ -2418,7 +2423,7 @@ class MapBinding(private val ctx: Context, fast: Boolean = false, res: Float = 1
      */
     private fun bubbleBitmap(diff: Int, traffic: Int = 0): Bitmap {
         val d = mapView.resources.displayMetrics.density * 2f
-        val top = if (diff < 0) "${-diff} min faster" else if (diff > 0) "$diff min slower" else "Same time"
+        val top = if (diff < 0) "เร็วกว่า ${-diff} นาที" else if (diff > 0) "ช้ากว่า $diff นาที" else "Same time"
         val sub = when (traffic) { -1 -> "Less traffic"; 1 -> "More traffic"; else -> "Similar traffic" }
         // day: a light card with dark writing, like the rest of the day look; night: the dark card. A faster way is green in both
         val day = !nightStyle

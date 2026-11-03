@@ -170,7 +170,7 @@ internal fun ImmPill(text: String, onClick: () -> Unit, icon: ImageVector? = nul
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         if (icon != null) Icon(icon, null, tint = fg, modifier = Modifier.size(22.dp))
-        Text(text, color = fg, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, softWrap = false)
+        Text(com.headunit.launcher.Thai.text(text), color = fg, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, softWrap = false)
     }
 }
 
@@ -178,8 +178,8 @@ internal fun ImmPill(text: String, onClick: () -> Unit, icon: ImageVector? = nul
 internal fun ImmStat(value: String, label: String, color: Color, compact: Boolean = false) {
     val c = LocalVw.current
     Column {
-        Text(value, color = color, fontSize = if (compact) 19.sp else 23.sp, fontWeight = FontWeight.Bold, maxLines = 1, softWrap = false)
-        Text(label, color = c.sub, fontSize = if (compact) 11.sp else 12.sp, maxLines = 1, softWrap = false)
+        Text(com.headunit.launcher.Thai.text(value), color = color, fontSize = if (compact) 19.sp else 23.sp, fontWeight = FontWeight.Bold, maxLines = 1, softWrap = false)
+        Text(com.headunit.launcher.Thai.text(label), color = c.sub, fontSize = if (compact) 11.sp else 12.sp, maxLines = 1, softWrap = false)
     }
 }
 
@@ -187,7 +187,7 @@ private class TileSpec(val icon: ImageVector, val label: String, val tint: Color
 
 @Composable
 private fun SheetHeading(text: String) {
-    Text(text.uppercase(), color = LocalVw.current.sub, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.2.sp, modifier = Modifier.padding(top = 10.dp, bottom = 2.dp))
+    Text(com.headunit.launcher.Thai.text(text.uppercase()), color = LocalVw.current.sub, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.2.sp, modifier = Modifier.padding(top = 10.dp, bottom = 2.dp))
 }
 
 // ------------------------------------------------------------------ the screen
@@ -423,7 +423,7 @@ private fun MapScreen(engine: NavEngine, onSettings: () -> Unit) {
             enter = fadeIn(tween(300)), exit = fadeOut(tween(250))) {
             Row(Modifier.panel(6.dp, RoundedCornerShape(20.dp), c.surface).padding(horizontal = 14.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Rounded.Traffic, null, tint = c.accent, modifier = Modifier.size(18.dp))
-                Text("Traffic round you · back when you move", color = c.text, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(start = 8.dp))
+                Text(com.headunit.launcher.Thai.text("Traffic round you · back when you move"), color = c.text, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(start = 8.dp))
             }
         }
 
@@ -446,8 +446,8 @@ private fun MapScreen(engine: NavEngine, onSettings: () -> Unit) {
             ) {
                 Box(Modifier.size(44.dp).clip(CircleShape).background(Good.copy(alpha = 0.18f)), contentAlignment = Alignment.Center) { Icon(Icons.Rounded.Route, null, tint = Good, modifier = Modifier.size(24.dp)) }
                 Column {
-                    Text("Faster route found", color = c.text, fontSize = 18.sp, fontWeight = FontWeight.Bold)
-                    Text("Saves about ${fr.savedMin} min", color = Good, fontSize = 14.sp, fontWeight = FontWeight.Medium)
+                    Text(com.headunit.launcher.Thai.text("Faster route found"), color = c.text, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                    Text(com.headunit.launcher.Thai.text("ประหยัดประมาณ ${fr.savedMin} นาที"), color = Good, fontSize = 14.sp, fontWeight = FontWeight.Medium)
                 }
                 ImmPill("Switch", { engine.acceptFaster() }, filled = true)
                 ImmPill("Keep", { engine.dismissFaster() })
@@ -493,7 +493,7 @@ private fun OptionsSheet(engine: NavEngine, shareEta: () -> Unit, wide: Boolean 
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Map options", color = c.text, fontSize = 20.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
+            Text(com.headunit.launcher.Thai.text("Map options"), color = c.text, fontSize = 20.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
             ImmIcon(Icons.Rounded.Settings, onSettings, size = 42.dp, desc = "Settings")
             Spacer(Modifier.width(8.dp))
             ImmIcon(Icons.Rounded.Close, close, size = 42.dp, desc = "Close")
@@ -591,7 +591,7 @@ private fun Segments(labels: List<String>, selected: Int, onPick: (Int) -> Unit)
         for ((i, label) in labels.withIndex()) {
             Box(Modifier.weight(1f).fillMaxHeight().clip(RoundedCornerShape(11.dp)).background(if (i == selected) c.accent else Color.Transparent)
                 .clickable { onPick(i) }, contentAlignment = Alignment.Center) {
-                Text(label, color = if (i == selected) Color.White else c.text, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, maxLines = 1)
+                Text(com.headunit.launcher.Thai.text(label), color = if (i == selected) Color.White else c.text, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, maxLines = 1)
             }
         }
     }
@@ -621,7 +621,7 @@ private fun LookCard(modifier: Modifier, label: String, satellite: Boolean, sele
                 drawRect(if (c.dark) Color(0xFF2E4A3A) else Color(0xFFCDE8D2), topLeft = Offset(w * 0.62f, h * 0.6f), size = androidx.compose.ui.geometry.Size(w * 0.28f, h * 0.3f))
             }
         }
-        Text(label, color = c.text, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
+        Text(com.headunit.launcher.Thai.text(label), color = c.text, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
     }
 }
 
@@ -633,8 +633,8 @@ private fun ToggleTile(modifier: Modifier, icon: ImageVector, label: String, on:
     Column(modifier.clip(shape).background(if (on) c.accent.copy(alpha = 0.2f) else c.tile)
         .border(if (on) 1.5.dp else 0.dp, if (on) c.accent else Color.Transparent, shape).pressClick(onClick).padding(vertical = 10.dp, horizontal = 4.dp),
         horizontalAlignment = Alignment.CenterHorizontally) {
-        Icon(icon, if (on) "$label on" else "$label off", tint = if (on) c.accent else c.sub, modifier = Modifier.size(24.dp))
-        Text(label, color = if (on) c.text else c.sub, fontSize = 12.sp, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 5.dp))
+        Icon(icon, if (on) "เปิด $label" else "ปิด $label", tint = if (on) c.accent else c.sub, modifier = Modifier.size(24.dp))
+        Text(com.headunit.launcher.Thai.text(label), color = if (on) c.text else c.sub, fontSize = 12.sp, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 5.dp))
     }
 }
 
@@ -651,7 +651,7 @@ private fun WideTiles(cols: Int, tiles: List<TileSpec>, compact: Boolean = false
                 Box(Modifier.size(if (compact) 32.dp else 38.dp).clip(CircleShape).background(t.tint.copy(alpha = 0.18f)), contentAlignment = Alignment.Center) {
                     Icon(t.icon, null, tint = t.tint, modifier = Modifier.size(if (compact) 19.dp else 22.dp))
                 }
-                Text(t.label, color = c.text, fontSize = if (compact) 11.sp else 12.sp, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 5.dp))
+                Text(com.headunit.launcher.Thai.text(t.label), color = c.text, fontSize = if (compact) 11.sp else 12.sp, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 5.dp))
             }
             repeat(cols - row.size) { Spacer(Modifier.weight(1f)) }
         }
@@ -695,7 +695,7 @@ private fun TripArea(engine: NavEngine, shareEta: () -> Unit, narrow: Boolean = 
                 val evPct = engine.evArrivalPct()
                 val evCol = if (evPct == null) c.text else if (evPct < 10) Bad else if (evPct < 20) Warn else Good
                 val stats: @Composable () -> Unit = {
-                    ImmStat(Geo.fmtDur(e.secs), if (e.delayMin >= 1) "+${e.delayMin} min traffic" else "time left", dc)
+                    ImmStat(Geo.fmtDur(e.secs), if (e.delayMin >= 1) "รถติด +${e.delayMin} นาที" else "time left", dc)
                     ImmStat(e.arrive, "arrival", c.text)
                     ImmStat(Geo.fmtDist(e.dist, engine.imperial), "to go", c.text)
                     if (evPct != null) ImmStat("$evPct%", "battery at arrival", evCol)
@@ -722,7 +722,7 @@ private fun TripArea(engine: NavEngine, shareEta: () -> Unit, narrow: Boolean = 
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Row(Modifier.weight(1f), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                        ImmStat(Geo.fmtDur(e.secs), if (e.delayMin >= 1) "+${e.delayMin} min" else "time left", dc, compact = true)
+                        ImmStat(Geo.fmtDur(e.secs), if (e.delayMin >= 1) "+${e.delayMin} นาที" else "time left", dc, compact = true)
                         ImmStat(e.arrive, "arrival", c.text, compact = true)
                         ImmStat(Geo.fmtDist(e.dist, engine.imperial), "to go", c.text, compact = true)
                         if (evPct != null) ImmStat("$evPct%", "battery", evCol, compact = true)
@@ -751,7 +751,7 @@ private fun ImmCompass(engine: NavEngine) {
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Box(Modifier.size(width = 4.dp, height = 8.dp).clip(RoundedCornerShape(2.dp)).background(Bad))
-            Text("N", color = if (engine.northUp) c.accent else c.text, fontSize = 15.sp, fontWeight = FontWeight.Bold)
+            Text(com.headunit.launcher.Thai.text("N"), color = if (engine.northUp) c.accent else c.text, fontSize = 15.sp, fontWeight = FontWeight.Bold)
         }
     }
 }
@@ -784,8 +784,8 @@ private fun SpeedBlock(engine: NavEngine) {
             Modifier.width(78.dp).panel(8.dp, RoundedCornerShape(24.dp), c.surface).padding(vertical = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text("${Math.round((engine.fix?.speed ?: 0.0) * k)}", color = speedTint(engine) ?: c.text, fontSize = 30.sp, fontWeight = FontWeight.Bold, maxLines = 1)
-            Text(if (engine.imperial) "mph" else "km/h", color = c.sub, fontSize = 12.sp)
+            Text(com.headunit.launcher.Thai.text("${Math.round((engine.fix?.speed ?: 0.0) * k)}"), color = speedTint(engine) ?: c.text, fontSize = 30.sp, fontWeight = FontWeight.Bold, maxLines = 1)
+            Text(com.headunit.launcher.Thai.text(if (engine.imperial) "mph" else "km/h"), color = c.sub, fontSize = 12.sp)
         }
         if (lim != null && !(show && engine.mirrored && !engine.isCar)) SpeedLimitSign(engine, 70.dp)
     }
@@ -835,10 +835,10 @@ private fun SpeedRing(engine: NavEngine, show: Boolean, k: Double) {
             }
             // the number sits exactly in the middle of the ring; the unit goes in the gap at the bottom of the arc
             val num = "${Math.round(sp * k)}"
-            Text(num, color = speedTint(engine) ?: c.text, fontSize = if (num.length >= 3) 27.sp else 33.sp, fontWeight = FontWeight.Bold, maxLines = 1,
+            Text(com.headunit.launcher.Thai.text(num), color = speedTint(engine) ?: c.text, fontSize = if (num.length >= 3) 27.sp else 33.sp, fontWeight = FontWeight.Bold, maxLines = 1,
                 style = androidx.compose.ui.text.TextStyle(platformStyle = androidx.compose.ui.text.PlatformTextStyle(includeFontPadding = false), lineHeight = 33.sp,
                     lineHeightStyle = androidx.compose.ui.text.style.LineHeightStyle(androidx.compose.ui.text.style.LineHeightStyle.Alignment.Center, androidx.compose.ui.text.style.LineHeightStyle.Trim.Both)))
-            Text(if (engine.imperial) "mph" else "km/h", color = c.sub, fontSize = 11.sp, modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 9.dp))
+            Text(com.headunit.launcher.Thai.text(if (engine.imperial) "mph" else "km/h"), color = c.sub, fontSize = 11.sp, modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 9.dp))
         }
         // The limit sign goes on the speed's inner side, so it never runs off the screen: the left normally, the right when the
         // app is mirrored for left-hand drive (the speed is then on the left edge). Android Auto never mirrors: its speed is
@@ -908,9 +908,9 @@ internal fun ImmTurnCard(
                 RollText(Geo.fmtDist(t.dist, engine.imperial), Color.White, if (compact) 28.sp else 38.sp, fontWeight = FontWeight.Bold)
                 val ukSign = engine.prefs.b(PreferenceKeys.UKSIGNS, true) && (t.sign.isNotBlank() && t.sign != t.street || t.tag.startsWith("Exit"))
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    if (t.tag.isNotBlank() && !(ukSign && t.tag.startsWith("Exit"))) Text(t.tag, color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.Bold, maxLines = 1,
+                    if (t.tag.isNotBlank() && !(ukSign && t.tag.startsWith("Exit"))) Text(com.headunit.launcher.Thai.text(t.tag), color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.Bold, maxLines = 1,
                         modifier = Modifier.clip(RoundedCornerShape(6.dp)).background(Color.White.copy(alpha = 0.18f)).padding(horizontal = 7.dp, vertical = 2.dp))
-                    if (!ukSign && t.sign.isNotBlank() && t.sign != t.street) Text(t.sign, color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis,
+                    if (!ukSign && t.sign.isNotBlank() && t.sign != t.street) Text(com.headunit.launcher.Thai.text(t.sign), color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.widthIn(max = 130.dp).clip(RoundedCornerShape(6.dp)).background(Color(0xFF1E8E55)).padding(horizontal = 7.dp, vertical = 2.dp))
                     Text(t.street, color = Color.White, fontSize = if (compact) 16.sp else 19.sp, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
@@ -920,7 +920,7 @@ internal fun ImmTurnCard(
                 Box(Modifier.size(44.dp).clip(RoundedCornerShape(12.dp)).background(TealDeep), contentAlignment = Alignment.Center) {
                     ManeuverArrow(t.thenManeuver, Geo.maneuverAngle(t.thenManeuver), Modifier.size(28.dp), roundaboutExit = t.thenExit, roundaboutClockwise = !engine.mirrored)
                 }
-                Text("then", color = Color.White.copy(alpha = 0.85f), fontSize = 11.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 2.dp))
+                Text(com.headunit.launcher.Thai.text("then"), color = Color.White.copy(alpha = 0.85f), fontSize = 11.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 2.dp))
             }
         }
         // Explicit slip-road / motorway-exit cue. Lane guidance alone can be ambiguous on
@@ -946,9 +946,9 @@ internal fun ImmTurnCard(
                     .padding(horizontal = 10.dp, vertical = if (compact) 5.dp else 7.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("↗", color = Color.White, fontSize = if (compact) 19.sp else 22.sp, fontWeight = FontWeight.ExtraBold)
+                Text(com.headunit.launcher.Thai.text("↗"), color = Color.White, fontSize = if (compact) 19.sp else 22.sp, fontWeight = FontWeight.ExtraBold)
                 Text(
-                    if (exitLabel.isNotBlank()) "EXIT  $exitLabel" else "EXIT / SLIP ROAD",
+                    com.headunit.launcher.Thai.text(if (exitLabel.isNotBlank()) "ทางออก  $exitLabel" else "EXIT / SLIP ROAD"),
                     color = Color.White,
                     fontSize = if (compact) 13.sp else 15.sp,
                     fontWeight = FontWeight.ExtraBold,
@@ -957,7 +957,7 @@ internal fun ImmTurnCard(
                     modifier = Modifier.padding(start = 7.dp)
                 )
                 Spacer(Modifier.weight(1f))
-                Text("↗", color = Color.White.copy(alpha = 0.9f), fontSize = if (compact) 18.sp else 20.sp, fontWeight = FontWeight.Bold)
+                Text(com.headunit.launcher.Thai.text("↗"), color = Color.White.copy(alpha = 0.9f), fontSize = if (compact) 18.sp else 20.sp, fontWeight = FontWeight.Bold)
             }
         }
         // A proper UK direction sign: blue for motorways, green for primary roads, white for local roads.
@@ -971,11 +971,11 @@ internal fun ImmTurnCard(
             else Box(Modifier.fillMaxWidth().background(TealDeep).padding(vertical = 4.dp), contentAlignment = Alignment.Center) { LaneRow(ls, t.maneuver, t.dist < 400.0) }
         }
         val heroShown = !car && engine.prefs.b(PreferenceKeys.LANE_STRIP, true) && engine.prefs.s(PreferenceKeys.LANE_STYLE, "hero") == "hero" && (t.lanes?.lanes?.size ?: 0) >= 2 && t.dist < 900.0
-        if (!compact && !heroShown && !(car && t.lanes != null && engine.prefs.b(PreferenceKeys.LANE_STRIP, true))) t.laneAdvice?.let { Text(it, color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.fillMaxWidth().background(TealDeep).padding(horizontal = 18.dp, vertical = 6.dp)) }
+        if (!compact && !heroShown && !(car && t.lanes != null && engine.prefs.b(PreferenceKeys.LANE_STRIP, true))) t.laneAdvice?.let { Text(com.headunit.launcher.Thai.text(it), color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.fillMaxWidth().background(TealDeep).padding(horizontal = 18.dp, vertical = 6.dp)) }
         if (!compact && t.thenManeuver != null && !thenIcon) {
             Row(Modifier.fillMaxWidth().background(TealDeep).padding(horizontal = 18.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                 ManeuverArrow(t.thenManeuver, Geo.maneuverAngle(t.thenManeuver), Modifier.size(22.dp), roundaboutExit = t.thenExit, roundaboutClockwise = !engine.mirrored)
-                Text(t.thenText, color = Color.White.copy(alpha = 0.92f), fontSize = 14.sp, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(start = 10.dp))
+                Text(com.headunit.launcher.Thai.text(t.thenText), color = Color.White.copy(alpha = 0.92f), fontSize = 14.sp, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(start = 10.dp))
             }
         }
         } // (end of the full card)
@@ -993,7 +993,7 @@ private fun ImmSearch(engine: NavEngine, q: String, onQ: (String) -> Unit, locke
     Box(Modifier.fillMaxWidth().height(60.dp).panel(10.dp, shape, c.surface)) {
         TextField(
             value = q, onValueChange = onQ, enabled = !locked,
-            placeholder = { Text(if (locked) "Tap the mic to search while driving" else "Where to?", fontSize = if (locked) 15.sp else 18.sp) },
+            placeholder = { Text(com.headunit.launcher.Thai.text(if (locked) "Tap the mic to search while driving" else "Where to?"), fontSize = if (locked) 15.sp else 18.sp) },
             leadingIcon = { Icon(Icons.Rounded.Search, null, tint = c.sub) },
             trailingIcon = {
                 if (q.isNotEmpty()) Icon(Icons.Rounded.Close, "Clear", tint = c.sub, modifier = Modifier.padding(end = 8.dp).clickable { onQ(""); engine.results = emptyList() })
@@ -1039,7 +1039,7 @@ private fun ImmResults(engine: NavEngine, onPicked: () -> Unit) {
                     Text(p.name, color = c.text, fontSize = 17.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     Text(p.sub, color = c.sub, fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
-                if (here != null) Text(Geo.fmtDist(Geo.dist(here, p.pos), engine.imperial), color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(start = 8.dp))
+                if (here != null) Text(com.headunit.launcher.Thai.text(Geo.fmtDist(Geo.dist(here, p.pos), engine.imperial)), color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(start = 8.dp))
             }
         }
     }
@@ -1054,7 +1054,7 @@ internal fun ImmChip(icon: ImageVector, tint: Color, label: String, onClick: () 
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(Modifier.size(30.dp).clip(CircleShape).background(tint.copy(alpha = 0.18f)), contentAlignment = Alignment.Center) { Icon(icon, null, tint = tint, modifier = Modifier.size(18.dp)) }
-        Text(label, color = c.text, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, softWrap = false, modifier = Modifier.padding(start = 8.dp))
+        Text(com.headunit.launcher.Thai.text(label), color = c.text, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, softWrap = false, modifier = Modifier.padding(start = 8.dp))
     }
 }
 
@@ -1100,8 +1100,8 @@ private fun PlaceTile(engine: NavEngine, modifier: Modifier, icon: ImageVector, 
         verticalAlignment = Alignment.CenterVertically) {
         Box(Modifier.size(36.dp).clip(CircleShape).background(tint.copy(alpha = 0.18f)), contentAlignment = Alignment.Center) { Icon(icon, null, tint = tint, modifier = Modifier.size(20.dp)) }
         Column(Modifier.padding(start = 10.dp).weight(1f)) {
-            Text(if (place == null) "Set ${label.lowercase()}" else label, color = c.text, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
-            Text(sub, color = c.sub, fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(com.headunit.launcher.Thai.text(if (place == null) "ตั้งค่า${com.headunit.launcher.Thai.text(label)}" else label), color = c.text, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(com.headunit.launcher.Thai.text(sub), color = c.sub, fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
     }
 }
@@ -1126,8 +1126,8 @@ private fun PhoneDestCard(engine: NavEngine, p: com.headunit.launcher.Place) {
             Icon(Icons.Rounded.PhoneAndroid, null, tint = c.accent, modifier = Modifier.size(21.dp))
         }
         Column(Modifier.weight(1f)) {
-            Text("From your phone: ${p.name}", color = c.text, fontSize = 16.sp, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
-            Text("Starting in $left s", color = c.sub, fontSize = 13.sp)
+            Text(com.headunit.launcher.Thai.text("จากโทรศัพท์: ${p.name}"), color = c.text, fontSize = 16.sp, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(com.headunit.launcher.Thai.text("เริ่มใน $left วินาที"), color = c.sub, fontSize = 13.sp)
         }
         ImmPill("Go", { engine.takePhoneDest(true) }, filled = true)
         ImmPill("Not now", { engine.takePhoneDest(false) })
@@ -1146,15 +1146,15 @@ private fun ParkedCard(engine: NavEngine) {
     if (ageMin > 48 * 60) return
     val ctx = androidx.compose.ui.platform.LocalContext.current
     val here = engine.fix?.pos
-    val ago = when { ageMin < 1 -> "just now"; ageMin < 60 -> "$ageMin min ago"; ageMin < 24 * 60 -> "${ageMin / 60} h ago"; else -> "yesterday" }
+    val ago = when { ageMin < 1 -> "just now"; ageMin < 60 -> "$ageMin นาทีที่แล้ว"; ageMin < 24 * 60 -> "${ageMin / 60} ชั่วโมงที่แล้ว"; else -> "yesterday" }
     Row(Modifier.fillMaxWidth().panel(10.dp, RoundedCornerShape(22.dp), c.surface).padding(start = 14.dp, end = 8.dp, top = 10.dp, bottom = 10.dp),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
         Box(Modifier.size(38.dp).clip(CircleShape).background(c.accent.copy(alpha = 0.18f)), contentAlignment = Alignment.Center) {
             Icon(Icons.Rounded.DirectionsCar, null, tint = c.accent, modifier = Modifier.size(21.dp))
         }
         Column(Modifier.weight(1f)) {
-            Text("Your car", color = c.text, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-            Text("Parked $ago" + (if (here != null) " · " + Geo.fmtDist(Geo.dist(here, spot), engine.imperial) else ""), color = c.sub, fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(com.headunit.launcher.Thai.text("Your car"), color = c.text, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            Text(com.headunit.launcher.Thai.text("จอดรถ $ago" + (if (here != null) " · " + Geo.fmtDist(Geo.dist(here, spot), engine.imperial) else "")), color = c.sub, fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
         // walking directions in the phone's maps app (Horizon Nav plans driving routes); just the spot if there's none
         ImmPill("Walk", {
@@ -1197,8 +1197,8 @@ private fun ImmQuick(engine: NavEngine, showSaved: Boolean = true) {
             ) {
                 Icon(Icons.Rounded.Route, null, tint = Color.White, modifier = Modifier.size(26.dp))
                 Column(Modifier.padding(start = 12.dp).weight(1f)) {
-                    Text("Resume trip to ${rp.name}", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    Text("You hadn't arrived when the app closed", color = Color.White.copy(alpha = 0.8f), fontSize = 12.sp)
+                    Text(com.headunit.launcher.Thai.text("เดินทางต่อไป ${rp.name}"), color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(com.headunit.launcher.Thai.text("You hadn't arrived when the app closed"), color = Color.White.copy(alpha = 0.8f), fontSize = 12.sp)
                 }
                 Icon(Icons.Rounded.Close, "Dismiss", tint = Color.White, modifier = Modifier.padding(start = 8.dp).size(24.dp).clickable { engine.resume = null; engine.prefs.put(PreferenceKeys.RESUME, "{}") })
             }
@@ -1212,12 +1212,12 @@ private fun ImmQuick(engine: NavEngine, showSaved: Boolean = true) {
         ) {
             Icon(when (pr.title) { "Home" -> Icons.Rounded.Home; "Work" -> Icons.Rounded.Work; else -> Icons.Rounded.History }, null, tint = Color.White, modifier = Modifier.size(26.dp))
             Column(Modifier.padding(start = 12.dp).weight(1f)) {
-                Text(listOfNotNull(pr.title, if (pr.mins >= 0) Geo.fmtDur(pr.mins * 60.0) else null, pr.note.ifBlank { null }).joinToString(" · "),
+                Text(com.headunit.launcher.Thai.text(listOfNotNull(pr.title, if (pr.mins >= 0) Geo.fmtDur(pr.mins * 60.0) else null, pr.note.ifBlank { null }).joinToString(" · ")),
                     color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 val arrive = if (pr.mins >= 0) "Arrive about " + com.headunit.launcher.Clock.hm(System.currentTimeMillis() + pr.mins * 60_000L) else pr.place.sub
-                Text(if (pr.delayMin >= 3) "$arrive · +${pr.delayMin} min delays" else arrive, color = Color.White.copy(alpha = 0.85f), fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(com.headunit.launcher.Thai.text(if (pr.delayMin >= 3) "$arrive · ล่าช้า +${pr.delayMin} นาที" else arrive), color = Color.White.copy(alpha = 0.85f), fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
-            Text("Go", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            Text(com.headunit.launcher.Thai.text("Go"), color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
         }
         val suggestion = remember { engine.habits.suggest(System.currentTimeMillis()) }
         if (pr == null && suggestion != null) Row(
@@ -1226,25 +1226,25 @@ private fun ImmQuick(engine: NavEngine, showSaved: Boolean = true) {
         ) {
             Icon(Icons.Rounded.History, null, tint = Color.White, modifier = Modifier.size(26.dp))
             Column(Modifier.padding(start = 12.dp).weight(1f)) {
-                Text("Going to ${suggestion.name}?", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(com.headunit.launcher.Thai.text("จะไป ${suggestion.name} ใช่ไหม?"), color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 if (suggestion.sub.isNotBlank()) Text(suggestion.sub, color = Color.White.copy(alpha = 0.8f), fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
-            Text("Go", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            Text(com.headunit.launcher.Thai.text("Go"), color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
         }
         // three places on show to keep the map clear; "All" opens the rest (it used to be a list up to five tall)
         AnimatedVisibility(showSaved && engine.prefs.b(PreferenceKeys.QUICKLIST, true),
             enter = fadeIn(tween(200)) + androidx.compose.animation.expandVertically(tween(240)), exit = fadeOut(tween(140)) + androidx.compose.animation.shrinkVertically(tween(200))) {
         Column(Modifier.fillMaxWidth().panel(10.dp, RoundedCornerShape(26.dp), c.surface).padding(vertical = 6.dp)) {
             Row(Modifier.fillMaxWidth().padding(start = 18.dp, end = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-                Text("SAVED & RECENT", color = c.sub, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.2.sp, modifier = Modifier.weight(1f))
-                if (saved.size > 3) Text(if (showAll) "Less" else "All ${saved.size}", color = c.accent, fontSize = 14.sp, fontWeight = FontWeight.SemiBold,
+                Text(com.headunit.launcher.Thai.text("SAVED & RECENT"), color = c.sub, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.2.sp, modifier = Modifier.weight(1f))
+                if (saved.size > 3) Text(com.headunit.launcher.Thai.text(if (showAll) "Less" else "ทั้งหมด ${saved.size}"), color = c.accent, fontSize = 14.sp, fontWeight = FontWeight.SemiBold,
                     modifier = Modifier.clip(RoundedCornerShape(12.dp)).clickable { showAll = !showAll }.padding(horizontal = 10.dp, vertical = 8.dp))
                 Row(Modifier.clip(RoundedCornerShape(12.dp)).clickable { adding = true }.padding(horizontal = 10.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Rounded.Add, null, tint = c.accent, modifier = Modifier.size(18.dp))
-                    Text("Add", color = c.accent, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(start = 2.dp))
+                    Text(com.headunit.launcher.Thai.text("Add"), color = c.accent, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(start = 2.dp))
                 }
             }
-            if (saved.isEmpty()) Text("Places you save or drive to show up here", color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(start = 18.dp, end = 18.dp, bottom = 8.dp))
+            if (saved.isEmpty()) Text(com.headunit.launcher.Thai.text("Places you save or drive to show up here"), color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(start = 18.dp, end = 18.dp, bottom = 8.dp))
             LazyColumn(Modifier.heightIn(max = 250.dp)) {
                 items(if (showAll) saved else saved.take(3)) { (p, kind, label) ->
                     val fav = kind != 2
@@ -1257,7 +1257,7 @@ private fun ImmQuick(engine: NavEngine, showSaved: Boolean = true) {
                             detectHorizontalDragGestures(
                                 onDragEnd = {
                                     if (kotlin.math.abs(dx) > w * 0.35f) when (kind) {
-                                        0 -> { engine.places.removeCustom(label); engine.toast("Removed $label", 2000) }
+                                        0 -> { engine.places.removeCustom(label); engine.toast("นำ $label ออกแล้ว", 2000) }
                                         1 -> { engine.places.toggleFavourite(p); engine.toast("Removed from favourites", 2000) }
                                         else -> { engine.places.removeRecent(p); engine.toast("Removed from recent places", 2000) }
                                     }
@@ -1272,10 +1272,10 @@ private fun ImmQuick(engine: NavEngine, showSaved: Boolean = true) {
                             Icon(if (fav) Icons.Rounded.Star else Icons.Rounded.History, null, tint = if (fav) Warn else c.sub, modifier = Modifier.size(22.dp))
                         }
                         Column(Modifier.padding(start = 14.dp).weight(1f)) {
-                            Text(label, color = c.text, fontSize = 17.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(com.headunit.launcher.Thai.text(label), color = c.text, fontSize = 17.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
                             if (p.sub.isNotBlank()) Text(p.sub, color = c.sub, fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
-                        if (here != null) Text(Geo.fmtDist(Geo.dist(here, p.pos), engine.imperial), color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(start = 8.dp))
+                        if (here != null) Text(com.headunit.launcher.Thai.text(Geo.fmtDist(Geo.dist(here, p.pos), engine.imperial)), color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(start = 8.dp))
                     }
                 }
             }
@@ -1304,9 +1304,9 @@ private fun ItineraryCard(engine: NavEngine) {
     Column(Modifier.fillMaxWidth().shadow(12.dp, shape).clip(shape).background(Teal).border(1.5.dp, Color.White.copy(alpha = 0.18f), shape)) {
         Row(Modifier.fillMaxWidth().padding(start = 18.dp, end = 10.dp, top = 12.dp, bottom = 8.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
-                Text("Your route", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text(com.headunit.launcher.Thai.text("Your route"), color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 val e = engine.eta
-                Text("${rows.size} ${if (rows.size == 1) "step" else "steps"}" + (if (e != null) " · " + Geo.fmtDist(e.dist, engine.imperial) + " · arrive " + e.arrive else ""),
+                Text(com.headunit.launcher.Thai.text("${rows.size} ${if (rows.size == 1) "step" else "steps"}" + (if (e != null) " · " + Geo.fmtDist(e.dist, engine.imperial) + " · arrive " + e.arrive else "")),
                     color = Color.White.copy(alpha = 0.8f), fontSize = 13.sp)
             }
             Box(Modifier.size(44.dp).clip(CircleShape).background(TealDeep).clickable { engine.closeItinerary() }, contentAlignment = Alignment.Center) {
@@ -1321,13 +1321,13 @@ private fun ItineraryCard(engine: NavEngine) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         ManeuverArrow(row.maneuver, Geo.maneuverAngle(row.maneuver), Modifier.size(30.dp), roundaboutExit = row.exit, roundaboutClockwise = !engine.mirrored)
                         Column(Modifier.padding(start = 14.dp).weight(1f)) {
-                            Text(row.text, color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Medium, maxLines = 2, overflow = TextOverflow.Ellipsis)
-                            Text(listOfNotNull(row.tag.ifBlank { null }, "about " + row.arrive).joinToString(" · "), color = Color.White.copy(alpha = 0.75f), fontSize = 12.sp, maxLines = 1)
+                            Text(com.headunit.launcher.Thai.text(row.text), color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Medium, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                            Text(com.headunit.launcher.Thai.text(listOfNotNull(row.tag.ifBlank { null }, "about " + row.arrive).joinToString(" · ")), color = Color.White.copy(alpha = 0.75f), fontSize = 12.sp, maxLines = 1)
                         }
-                        Text(Geo.fmtDist(row.dist, engine.imperial), color = Color.White, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(start = 10.dp))
+                        Text(com.headunit.launcher.Thai.text(Geo.fmtDist(row.dist, engine.imperial)), color = Color.White, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(start = 10.dp))
                     }
                     if (sel && row.road.isNotBlank()) Row(Modifier.padding(start = 44.dp, top = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Text("Avoid ${row.road}", color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.SemiBold,
+                        Text(com.headunit.launcher.Thai.text("หลีกเลี่ยง ${row.road}"), color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.SemiBold,
                             modifier = Modifier.clip(RoundedCornerShape(50)).background(Color.White.copy(alpha = 0.18f)).clickable { engine.avoidTurnRoad(row) }.padding(horizontal = 14.dp, vertical = 7.dp))
                     }
                 }

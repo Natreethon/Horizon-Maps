@@ -158,8 +158,8 @@ object OfflineRouter {
         val total = c.contentLengthLong
         val dst = File(d, name)
         // already here (same size): kept, and marked as checked now, so the "new map data" check doesn't keep offering it
-        if (total > 0 && dst.exists() && dst.length() == total) { c.disconnect(); dst.setLastModified(System.currentTimeMillis()); progress("Already have $name"); return true }
-        progress("Downloading $name…")
+        if (total > 0 && dst.exists() && dst.length() == total) { c.disconnect(); dst.setLastModified(System.currentTimeMillis()); progress("มี $name แล้ว"); return true }
+        progress("กำลังดาวน์โหลด $name…")
         val tmp = File(d, "$name.part")
         c.inputStream.use { i ->
             tmp.outputStream().use { o ->
@@ -170,7 +170,7 @@ object OfflineRouter {
                     if (n < 0) break
                     o.write(buf, 0, n); done += n
                     val mb = done / 8_000_000
-                    if (mb != lastMb) { lastMb = mb; progress("Downloading $name… ${done / 1_048_576} MB" + if (total > 0) " of ${total / 1_048_576} MB" else "") }
+                    if (mb != lastMb) { lastMb = mb; progress("กำลังดาวน์โหลด $name… ${done / 1_048_576} MB" + if (total > 0) " จาก ${total / 1_048_576} MB" else "") }
                 }
             }
         }
@@ -194,12 +194,12 @@ object OfflineRouter {
                 if (!ok) break
                 sum += len; k++
             }
-            if (k > 0 && sum == have.length()) { have.setLastModified(System.currentTimeMillis()); progress("Already have $name"); return true }
+            if (k > 0 && sum == have.length()) { have.setLastModified(System.currentTimeMillis()); progress("มี $name แล้ว"); return true }
         }
         var n = 0
         while (fetch(d, base, "$name.part%02d".format(n), progress)) n++
         if (n == 0) return false
-        progress("Joining $name…")
+        progress("กำลังรวม $name…")
         val joined = File(d, "$name.joining")
         joined.outputStream().use { o ->
             for (i in 0 until n) {
@@ -221,7 +221,7 @@ object OfflineRouter {
         // updating the area in use: let go of its routing file while it's replaced
         if (d.path == dir(ctx).path) closeEngine()
         File(d, "bounds.txt").delete(); boundsCache.remove(id); invalidate()
-        for (name in listOf("valhalla.json", "admins.sqlite")) if (!fetch(d, base, name, progress)) throw java.io.IOException("$name not found at that address")
+        for (name in listOf("valhalla.json", "admins.sqlite")) if (!fetch(d, base, name, progress)) throw java.io.IOException("ไม่พบ $name ที่ที่อยู่นั้น")
         if (!fetchJoined(d, base, "tiles.tar", progress)) throw java.io.IOException("tiles.tar not found at that address")
         if (!fetchJoined(d, base, "places.tsv", progress)) progress("No places.tsv: streets and shops will not be searchable offline")
         if (fetchJoined(d, base, "fonts.zip", progress)) OfflineMap.unpackFonts(File(d, "fonts.zip"), File(d, "fonts"))
@@ -923,7 +923,7 @@ object OfflineRouter {
             res = JSONObject(engine(pd).routeRaw(req.toString()))
         }
         val o: JSONObject = res ?: throw IllegalStateException("No offline route")
-        if (o.has("error") && !o.has("trip")) throw IllegalStateException("No offline route here (${o.optString("error")}). Is it inside the downloaded area?")
+        if (o.has("error") && !o.has("trip")) throw IllegalStateException("ไม่พบเส้นทางออฟไลน์ที่นี่ (${o.optString("error")}) โปรดตรวจว่าอยู่ในพื้นที่ที่ดาวน์โหลด")
         val trip = o.getJSONObject("trip")
         val legs = trip.getJSONArray("legs")
         val pts = ArrayList<LL>()

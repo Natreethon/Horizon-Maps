@@ -261,7 +261,7 @@ fun App(prefs: Prefs, engine: NavEngine, map: MapBinding) {
                     // (the map draws rain and snow itself now; the screen overlay is kept for fog, and for when the map can't)
                     if (prefs.b(PreferenceKeys.RAIN_EFFECTS, false) && wxCode != null && (wxCode == 45 || wxCode == 48 || !map.drawsWeather)) WeatherFx(wxCode, Modifier.fillMaxSize())
                     NavOverlays(engine, onSettings = { settings = true })
-                    if (prefs.b(PreferenceKeys.PERFORMANCE_METER, false) && engine.perfLine.isNotEmpty()) Text(engine.perfLine, color = Color.White, fontSize = 12.sp,
+                    if (prefs.b(PreferenceKeys.PERFORMANCE_METER, false) && engine.perfLine.isNotEmpty()) Text(com.headunit.launcher.Thai.text(engine.perfLine), color = Color.White, fontSize = 12.sp,
                         modifier = Modifier.align(Alignment.TopCenter).padding(top = 4.dp).background(Color.Black.copy(alpha = 0.6f), RoundedCornerShape(8.dp)).padding(horizontal = 10.dp, vertical = 4.dp))
                     if (engine.deadReckoning) DeadReckoningChip(Modifier.align(Alignment.BottomCenter).padding(bottom = 84.dp))
                     else if (engine.cruising && engine.following && prefs.b(PreferenceKeys.CRUISE, true)) CruisePill(engine, Modifier.align(Alignment.BottomCenter).padding(bottom = 18.dp))
@@ -293,7 +293,7 @@ fun App(prefs: Prefs, engine: NavEngine, map: MapBinding) {
                 ) {
                     Box(
                         Modifier.shadow(10.dp, RoundedCornerShape(50)).clip(RoundedCornerShape(50)).background(navVw(c).surface).border(1.dp, navVw(c).line, RoundedCornerShape(50)).padding(horizontal = 22.dp, vertical = 11.dp),
-                    ) { Text(lastMsg.value ?: "", color = navVw(c).text, fontSize = 15.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Medium) }
+                    ) { Text(com.headunit.launcher.Thai.text(lastMsg.value ?: ""), color = navVw(c).text, fontSize = 15.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Medium) }
                 }
                 // alerts (camera, speed limit, incident, rain, break) get a large banner that is hard to miss
                 if (!settings) {
@@ -343,10 +343,10 @@ fun App(prefs: Prefs, engine: NavEngine, map: MapBinding) {
             val header: @Composable () -> Unit = {
                 Box(Modifier.fillMaxWidth().clip(RoundedCornerShape(22.dp)).background(updateHeader).padding(18.dp)) {
                     androidx.compose.foundation.layout.Column(verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(6.dp)) {
-                        Text("HORIZON NAV  /  UPDATE", color = updatePalette.accent, fontSize = 11.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, letterSpacing = 1.5.sp)
-                        Text("What's new in $installedVersion", color = updateHeaderTitle, fontSize = 25.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, lineHeight = 30.sp)
+                        Text(com.headunit.launcher.Thai.text("HORIZON NAV  /  UPDATE"), color = updatePalette.accent, fontSize = 11.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, letterSpacing = 1.5.sp)
+                        Text(com.headunit.launcher.Thai.text("มีอะไรใหม่ใน $installedVersion"), color = updateHeaderTitle, fontSize = 25.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, lineHeight = 30.sp)
                         val summary = remember(whatsNewNotes) { notesSummary(whatsNewNotes) }
-                        Text(summary.ifBlank { "Your settings and saved places stay as they were" }, color = updateHeaderSub, fontSize = 14.sp)
+                        Text(com.headunit.launcher.Thai.text(summary.ifBlank { "Your settings and saved places stay as they were" }), color = updateHeaderSub, fontSize = 14.sp)
                     }
                 }
             }
@@ -356,7 +356,7 @@ fun App(prefs: Prefs, engine: NavEngine, map: MapBinding) {
                     modifier = Modifier.fillMaxWidth(),
                     colors = androidx.compose.material3.ButtonDefaults.buttonColors(containerColor = updatePalette.accent, contentColor = if (updatePalette.dark) Color(0xFF102039) else Color.White),
                     shape = RoundedCornerShape(16.dp)
-                ) { Text("Let's go", fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, modifier = Modifier.padding(vertical = 4.dp)) }
+                ) { Text(com.headunit.launcher.Thai.text("Let's go"), fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, modifier = Modifier.padding(vertical = 4.dp)) }
             }
             if (wideCard) {
                 val cardW = (conf.screenWidthDp.dp * 0.92f).coerceAtMost(1100.dp)

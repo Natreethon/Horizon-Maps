@@ -40,8 +40,8 @@ class NavService : Service() {
         private fun notification(ctx: Context, text: String): Notification {
             val nm = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             if (nm.getNotificationChannel(CHANNEL) == null) {
-                nm.createNotificationChannel(NotificationChannel(CHANNEL, "Navigation", NotificationManager.IMPORTANCE_LOW).apply {
-                    description = "Shown while a route is running"
+                nm.createNotificationChannel(NotificationChannel(CHANNEL, "การนำทาง", NotificationManager.IMPORTANCE_LOW).apply {
+                    description = "แสดงขณะกำลังนำทาง"
                     setShowBadge(false)
                 })
             }
@@ -51,8 +51,8 @@ class NavService : Service() {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
             return Notification.Builder(ctx, CHANNEL).setSmallIcon(R.drawable.ic_stat_nav)
-                .setContentTitle("Horizon Nav")
-                .setContentText(text)
+                .setContentTitle(com.headunit.launcher.Thai.text("Horizon Nav"))
+                .setContentText(com.headunit.launcher.Thai.text(text))
                 .setContentIntent(open)
                 .setOngoing(true)
                 .setOnlyAlertOnce(true)

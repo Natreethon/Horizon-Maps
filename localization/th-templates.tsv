@@ -1,0 +1,183 @@
+Saves about {0} min	ประหยัดประมาณ {0} นาที
+Starting in {0} s	เริ่มใน {0} วินาที
+{0} min ago	{0} นาทีที่แล้ว
+{0} h ago	{0} ชั่วโมงที่แล้ว
+{0} days ago	{0} วันที่แล้ว
+{0} h {1} min	{0} ชม. {1} นาที
+{0} min	{0} นาที
+{0} km	{0} กม.
+{0} ft	{0} ฟุต
+{0} mi	{0} ไมล์
+{0} feet	{0} ฟุต
+{0} metres	{0} เมตร
+{0} min slower	ช้ากว่า {0} นาที
+{0} min faster	เร็วกว่า {0} นาที
+{0} left	เหลือ {0}
+{0} min walk	เดิน {0} นาที
+{0} trips	{0} การเดินทาง
+{0} is already downloaded	ดาวน์โหลด {0} แล้ว
+{0} report saved here	บันทึกรายงาน {0} ที่นี่แล้ว
+{0} reported ahead	มีรายงาน {0} ข้างหน้า
+{0} is now Home	ตั้ง {0} เป็นบ้านแล้ว
+{0} is now Work	ตั้ง {0} เป็นที่ทำงานแล้ว
+{0} saved: {1}	บันทึก {0}: {1}
+{0} points	{0} จุด
+{0} spaces	{0} ช่อง
+{0} only	เฉพาะ {0}
+{0} auto	{0} อัตโนมัติ
+{0} off	ปิด {0}
+{0} on	เปิด {0}
+{0} in {1}	{0} ในอีก {1}
+{0} ahead in {1}{2}	ข้างหน้ามี {0} ในอีก {1}{2}
+{0} ahead, {1}{2}	ข้างหน้ามี {0} อีก {1}{2}
+{0}: hold on it to add it as a stop	{0}: กดค้างเพื่อเพิ่มเป็นจุดแวะ
+{0}: hold on it to go there	{0}: กดค้างเพื่อเดินทางไป
+{0} isn't working right now, so {1} is being used instead	{0} ใช้งานไม่ได้ในขณะนี้ จึงใช้ {1} แทน
+{0} not found at that address	ไม่พบ {0} ที่ที่อยู่นั้น
+{0} recent, plus places remembered for searching without signal	สถานที่ล่าสุด {0} แห่ง และสถานที่ที่เก็บไว้ค้นหาออฟไลน์
+{0} exit	ทางออกที่ {0}
+{0} lanes	{0} ช่องทาง
+{0} · arrive {1}	{0} · ถึง {1}
+{0} · moving {1} · top {2} {3}	{0} · เคลื่อนที่ {1} · สูงสุด {2} {3}
+{0} · take it steady, {1} limit	{0} · ขับอย่างระมัดระวัง จำกัดความเร็ว {1}
+{0}% · tap to cycle from 40% to 300%	{0}% · แตะเพื่อเปลี่ยนขนาด 40% ถึง 300%
+{0}% · tap to increase; resets after 300%	{0}% · แตะเพื่อขยาย กลับค่าเดิมเมื่อเกิน 300%
+{0}: needs Unknown sources in Android Auto	{0}: ต้องเปิดแหล่งที่ไม่รู้จักใน Android Auto
+{0} · +{1} min delays	{0} · ล่าช้า +{1} นาที
++{0} min traffic	รถติด +{0} นาที
++{0} min	+{0} นาที
+In {0}, {1}	อีก {0} {1}
+In {0}, {1}{2}	อีก {0} {1}{2}
+In {0}, you will arrive	อีก {0} จะถึงปลายทาง
+Your destination is on the {0}	ปลายทางอยู่ด้าน{0}
+. Your destination is on the {0}	 ปลายทางอยู่ด้าน{0}
+ onto {0}	 เข้าสู่ {0}
+ for the {0}	 ไปทาง {0}
+ near {0}	 ใกล้ {0}
+ in {0} min	 ในอีก {0} นาที
+ · in {0} min	 · ในอีก {0} นาที
+ · on the {0}	 · ด้าน{0}
+ · built {0}	 · ข้อมูลวันที่ {0}
+ · a strip along the route · about {0} MB	 · แนวตามเส้นทาง · ประมาณ {0} MB
+ · {0} stations	 · {0} สถานี
+ · +{0} min	 · +{0} นาที
+ expected in about {0} min on your route	 คาดว่าอีกประมาณ {0} นาทีบนเส้นทาง
+ expected in about {0} minutes on your route	 คาดว่าอีกประมาณ {0} นาทีบนเส้นทาง
+ likely at arrival ({0}%)	 คาดว่าจะพบเมื่อถึง ({0}%)
+ {0} minutes of traffic.	 รถติด {0} นาที
+ {0} free.	 ว่าง {0}
+ of {0} MB	 จาก {0} MB
+ (+{0} more)	 (อีก {0})
+ (account {0})	 (บัญชี {0})
+ (account {0}).	 (บัญชี {0})
+, about {0} minutes delay	 ล่าช้าประมาณ {0} นาที
+, arriving about {0}	 ถึงประมาณ {0}
+A faster route is available, saving {0} minutes	มีเส้นทางเร็วกว่า ประหยัด {0} นาที
+A faster route is available, saving {0} minutes. Tap it on the map to switch.	มีเส้นทางเร็วกว่า ประหยัด {0} นาที แตะบนแผนที่เพื่อเปลี่ยน
+A small download of towns and villages in {0}, so you can search for them without signal even without the full pack.	ดาวน์โหลดชื่อเมืองและหมู่บ้านใน {0} ขนาดเล็ก เพื่อค้นหาออฟไลน์ได้แม้ไม่มีชุดแผนที่เต็ม
+All {0}	ทั้งหมด {0}
+Already have {0}	มี {0} แล้ว
+Already saving {0}: wait for it to finish, or stop it	กำลังบันทึก {0} รอให้เสร็จหรือหยุดก่อน
+Around home · {0} km	รอบบ้าน · {0} กม.
+Arrive by {0}	ถึงภายใน {0}
+Average speed check ahead, {0} long	ข้างหน้ามีจุดตรวจความเร็วเฉลี่ย ระยะ {0}
+Average speed check for {0}	ตรวจความเร็วเฉลี่ยเป็นระยะ {0}
+Avoid {0}	หลีกเลี่ยง {0}
+Carrying on to {0}	เดินทางต่อไปยัง {0}
+Checking the {0} pack…	กำลังตรวจชุดแผนที่ {0}…
+Could not find \"{0}\"	ไม่พบ \"{0}\"
+Couldn't save the map: {0}	บันทึกแผนที่ไม่สำเร็จ: {0}
+Download {0}	ดาวน์โหลด {0}
+Download failed: {0}. Tap Download again to carry on.	ดาวน์โหลดไม่สำเร็จ: {0} แตะดาวน์โหลดอีกครั้งเพื่อทำต่อ
+Downloading {0}…	กำลังดาวน์โหลด {0}…
+Downloading {0}… {1} MB	กำลังดาวน์โหลด {0}… {1} MB
+Downloading… {0}% ({1} / {2} MB)	กำลังดาวน์โหลด… {0}% ({1} / {2} MB)
+Downloading… {0} MB	กำลังดาวน์โหลด… {0} MB
+EXIT  {0}	ทางออก  {0}
+Entering {0} in {1}	เข้าสู่ {0} ในอีก {1}
+Exit {0}	ทางออก {0}
+Failed: {0}	ไม่สำเร็จ: {0}
+From your phone: {0}	จากโทรศัพท์: {0}
+Going to {0}?	จะไป {0} ใช่ไหม?
+Heading {0}	มุ่งหน้า {0}
+Home set to {0}	ตั้งค่าบ้านเป็น {0} แล้ว
+I'm on my way to {0}	ฉันกำลังเดินทางไป {0}
+Installed {0}  →  Available {1}	ติดตั้ง {0}  →  เวอร์ชันใหม่ {1}
+Installed: {0} places	ติดตั้งแล้ว: {0} สถานที่
+It's {0}	ขณะนี้ {0}
+It's time to leave for {0}	ได้เวลาออกเดินทางไป {0}
+Joining {0}…	กำลังรวม {0}…
+Keep under {0} {1} for the rest	รักษาความเร็วต่ำกว่า {0} {1} ตลอดช่วงที่เหลือ
+Leave by {0} to arrive by {1}. I'll remind you.	ออกเดินทางภายใน {0} เพื่อถึงภายใน {1} ระบบจะเตือนคุณ
+Leave by {0} for {1}	ออกเดินทางภายใน {0} เพื่อไป {1}
+Leave in 10 minutes for {0}	อีก 10 นาทีออกเดินทางไป {0}
+Leave in about 10 minutes for {0}	อีกประมาณ 10 นาทีออกเดินทางไป {0}
+Leave now to arrive by {0}	ออกตอนนี้เพื่อถึงภายใน {0}
+Make {0}…	ตั้ง {0} เป็น…
+Map: {0}	แผนที่: {0}
+Mapbox search didn't work: {0}	ค้นหาด้วย Mapbox ไม่สำเร็จ: {0}
+Navigating to {0}	กำลังนำทางไป {0}
+New map data for {0}	มีข้อมูลแผนที่ใหม่สำหรับ {0}
+No offline route here ({0}). Is it inside the downloaded area?	ไม่พบเส้นทางออฟไลน์ที่นี่ ({0}) โปรดตรวจว่าอยู่ในพื้นที่ที่ดาวน์โหลด
+Nothing matches \"{0}\"	ไม่พบผลลัพธ์สำหรับ \"{0}\"
+Offline area: {0}	พื้นที่ออฟไลน์: {0}
+Offline map is {0} months old	แผนที่ออฟไลน์เก่า {0} เดือน
+Offline speed limits and cameras are now ready for {0}: tap its Update (only the new files download, usually under 100 MB).	ข้อมูลความเร็วและกล้องออฟไลน์ของ {0} พร้อมแล้ว แตะอัปเดตเพื่อดาวน์โหลดเฉพาะไฟล์ใหม่ โดยปกติน้อยกว่า 100 MB
+On the {0}	ด้าน{0}
+Paired with your car ({0}). \"Send to car\" is on the route screen, next to Save	จับคู่กับรถแล้ว ({0}) ปุ่ม \"ส่งไปยังรถ\" อยู่ในหน้าเส้นทางข้างปุ่มบันทึก
+Paired. Code {0}: type it on another phone to add it too	จับคู่แล้ว รหัส {0}: กรอกบนโทรศัพท์อีกเครื่องเพื่อเพิ่มได้
+Parked {0}	จอดรถ {0}
+Parking near {0}	ที่จอดรถใกล้ {0}
+Removed {0}	นำ {0} ออกแล้ว
+Rename {0}	เปลี่ยนชื่อ {0}
+Reroute failed ({0}), trying again…	คำนวณเส้นทางใหม่ไม่สำเร็จ ({0}) กำลังลองอีกครั้ง…
+Restored {0} settings	กู้คืนการตั้งค่า {0} รายการแล้ว
+Resume trip to {0}	เดินทางต่อไป {0}
+Route failed: {0}	คำนวณเส้นทางไม่สำเร็จ: {0}
+Saved as {0}	บันทึกเป็น {0} แล้ว
+Saved to Downloads as HorizonNav-{0}.apk. Install it with AAEnabler to keep it in Android Auto	บันทึกในดาวน์โหลดเป็น HorizonNav-{0}.apk แล้ว ติดตั้งผ่าน AAEnabler เพื่อใช้ใน Android Auto
+Saved: {0}	บันทึกแล้ว: {0}
+Saving {0}% · {1} MB	กำลังบันทึก {0}% · {1} MB
+School ahead: {0}	ข้างหน้ามีโรงเรียน: {0}
+Search failed: {0}	ค้นหาไม่สำเร็จ: {0}
+Search for your {0} address or postcode	ค้นหาที่อยู่หรือรหัสไปรษณีย์ของ{0}
+Sent to your car: {0}	ส่งไปยังรถแล้ว: {0}
+Set {0}	ตั้งค่า{0}
+Speed camera alerts are off in {0}, where they aren't allowed. You can change this in Settings > Alerts.	ปิดการเตือนกล้องใน {0} ตามข้อจำกัดในระบบ เปลี่ยนได้ใน การตั้งค่า > การแจ้งเตือน
+Speed limit {0}	จำกัดความเร็ว {0}
+Starts in {0} · {1} long	เริ่มอีก {0} · ระยะ {1}
+Stop added: {0}	เพิ่มจุดแวะแล้ว: {0}
+Stop reached: {0}	ถึงจุดแวะ: {0}
+Switch −{0} min	เปลี่ยน −{0} นาที
+Switched: about {0} min quicker	เปลี่ยนแล้ว เร็วขึ้นประมาณ {0} นาที
+Switched: about {0} min longer	เปลี่ยนแล้ว ช้าลงประมาณ {0} นาที
+Take exit {0}	ใช้ทางออก {0}
+The {0} pack isn't available yet. It appears here once it has been built.	ชุดแผนที่ {0} ยังไม่พร้อม จะแสดงเมื่อสร้างเสร็จ
+The {0} pack hasn't been built yet, so it can't be downloaded at the moment.	ยังไม่ได้สร้างชุดแผนที่ {0} จึงยังดาวน์โหลดไม่ได้
+The 3D map within {0} km of Home · about {1} MB	แผนที่ 3 มิติรอบบ้าน {0} กม. · ประมาณ {1} MB
+The area in use is about {0} months old. Update it on Wi-Fi to pick up new roads and junction changes.	ข้อมูลพื้นที่ที่ใช้เก่าประมาณ {0} เดือน อัปเดตผ่าน Wi-Fi เพื่อรับถนนและทางแยกใหม่
+Time to leave for {0}	ได้เวลาออกเดินทางไป {0}
+Up to {0} {1} keeps you under	ไม่เกิน {0} {1} เพื่อคงความเร็วเฉลี่ยต่ำกว่าขีดจำกัด
+Update to {0}	อัปเดตเป็น {0}
+Use lane {0} from the left	ใช้ช่องทางที่ {0} จากซ้าย
+Use the left {0}	ใช้ {0} ด้านซ้าย
+Use the middle {0}	ใช้ {0} ตรงกลาง
+Use the right {0}	ใช้ {0} ด้านขวา
+Uses screen size and shape (currently {0}%)	ปรับตามขนาดและรูปทรงหน้าจอ ปัจจุบัน {0}%
+Version {0} is available	มีเวอร์ชัน {0} พร้อมอัปเดต
+What's new in {0}	มีอะไรใหม่ใน {0}
+Work set to {0}	ตั้งค่าที่ทำงานเป็น {0} แล้ว
+You are about to enter {0}. A charge may apply.	คุณกำลังจะเข้า {0} อาจมีค่าธรรมเนียม
+You are in {0}	คุณอยู่ใน {0}
+You are in {0}. A charge may apply.	คุณอยู่ใน {0} อาจมีค่าธรรมเนียม
+You have been driving for {0} hours. Consider taking a break.	คุณขับมา {0} ชั่วโมงแล้ว ควรหยุดพักสักครู่
+You have been driving for {0} hours. Time for a break?	คุณขับมา {0} ชั่วโมงแล้ว พักสักครู่ไหม?
+You'll arrive at {0}, in {1}. {2} to go.	จะถึงเวลา {0} ใช้เวลาอีก {1} เหลือระยะทาง {2}
+Your downloaded map ends before {0}: the route goes to the edge of it for now, and the rest is planned as soon as there's signal	แผนที่ที่ดาวน์โหลดสิ้นสุดก่อนถึง {0} จึงนำทางถึงขอบพื้นที่ก่อน และคำนวณส่วนที่เหลือเมื่อมีสัญญาณ
+arrive about {0}% · charge to 80%, about {1} min	ถึงด้วยแบตเตอรี่ประมาณ {0}% · ชาร์จถึง 80% ประมาณ {1} นาที
+at the roundabout, take the {0} exit	ที่วงเวียน ใช้ทางออกที่ {0}
+take the {0} exit at the roundabout	ใช้ทางออกที่ {0} ที่วงเวียน
+take {0} {1}	ใช้{0} {1}
+avg {0}	เฉลี่ย {0}
+updated {0}	อัปเดต {0}
+via {0}	ผ่าน {0}

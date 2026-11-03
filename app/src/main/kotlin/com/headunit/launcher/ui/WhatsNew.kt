@@ -142,7 +142,7 @@ internal fun WhatsNewList(notes: String, dark: Boolean, columns: Int = 1, maxHei
     Column(Modifier.fillMaxWidth().heightIn(max = capH).verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(8.dp)) {
         if (items.isEmpty()) {
-            Text(if (notes.isBlank()) "This version is installed and ready. The details of what changed aren't available right now." else notes,
+            Text(com.headunit.launcher.Thai.text(if (notes.isBlank()) "This version is installed and ready. The details of what changed aren't available right now." else notes),
                 color = v.text, fontSize = 14.sp, lineHeight = 20.sp, modifier = Modifier.padding(4.dp))
             return@Column
         }
@@ -151,7 +151,7 @@ internal fun WhatsNewList(notes: String, dark: Boolean, columns: Int = 1, maxHei
         for (kind in 0..2) {
             val group = items.filter { it.kind == kind }
             if (group.isEmpty()) continue
-            Text(kindNames[kind], color = tints[kind], fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.3.sp,
+            Text(com.headunit.launcher.Thai.text(kindNames[kind]), color = tints[kind], fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.3.sp,
                 modifier = Modifier.padding(top = if (first) 2.dp else 10.dp, start = 2.dp).clip(RoundedCornerShape(10.dp)).background(tintBg[kind]).padding(horizontal = 9.dp, vertical = 3.dp))
             first = false
             for (row in group.chunked(cols)) {
@@ -174,8 +174,8 @@ private fun NoteCard(it: NoteItem, v: Vw, tints: List<Color>, tintBg: List<Color
             Icon(it.icon, null, tint = tints[it.kind], modifier = Modifier.size(21.dp))
         }
         Column(Modifier.weight(1f)) {
-            if (it.title.isNotBlank()) Text(it.title, color = v.text, fontSize = 15.sp, fontWeight = FontWeight.Bold, lineHeight = 19.sp)
-            if (it.desc.isNotBlank()) Text(it.desc, color = v.sub, fontSize = 13.sp, lineHeight = 18.sp, modifier = Modifier.padding(top = if (it.title.isNotBlank()) 3.dp else 0.dp))
+            if (it.title.isNotBlank()) Text(com.headunit.launcher.Thai.text(it.title), color = v.text, fontSize = 15.sp, fontWeight = FontWeight.Bold, lineHeight = 19.sp)
+            if (it.desc.isNotBlank()) Text(com.headunit.launcher.Thai.text(it.desc), color = v.sub, fontSize = 13.sp, lineHeight = 18.sp, modifier = Modifier.padding(top = if (it.title.isNotBlank()) 3.dp else 0.dp))
         }
     }
 }

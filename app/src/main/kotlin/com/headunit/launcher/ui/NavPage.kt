@@ -160,13 +160,13 @@ internal fun BoxScope.RoutePreview(engine: NavEngine) {
             Modifier.floating(50.dp).horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(18.dp),
         ) {
-            Text("Weather on route", color = c.sub, fontSize = 13.sp)
+            Text(com.headunit.launcher.Thai.text("Weather on route"), color = c.sub, fontSize = 13.sp)
             engine.routeWx.forEach { w ->
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(wxIcon(w.code), null, tint = wxTint(w.code), modifier = Modifier.size(24.dp))
                     Column(Modifier.padding(start = 6.dp)) {
-                        Text((if (fahr) Math.round(w.temp * 9 / 5 + 32) else Math.round(w.temp)).toString() + "°", color = c.text, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
-                        Text("in ${if (w.minutes >= 60) "${w.minutes / 60} h ${w.minutes % 60} min" else "${w.minutes} min"}" + (if (w.rain >= 40) " · ${w.rain}%" else ""), color = if (w.rain >= 60) Warn else c.sub, fontSize = 11.sp)
+                        Text(com.headunit.launcher.Thai.text((if (fahr) Math.round(w.temp * 9 / 5 + 32) else Math.round(w.temp)).toString() + "°"), color = c.text, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                        Text(com.headunit.launcher.Thai.text("in ${if (w.minutes >= 60) "${w.minutes / 60} h ${w.minutes % 60} min" else "${w.minutes} min"}" + (if (w.rain >= 40) " · ${w.rain}%" else "")), color = if (w.rain >= 60) Warn else c.sub, fontSize = 11.sp)
                     }
                 }
             }
@@ -176,19 +176,19 @@ internal fun BoxScope.RoutePreview(engine: NavEngine) {
         Modifier.floating(50.dp).horizontalScroll(rememberScrollState()).padding(6.dp),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
-        Text("Stops", color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(horizontal = 10.dp))
+        Text(com.headunit.launcher.Thai.text("Stops"), color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(horizontal = 10.dp))
         Pill("+ Fuel", engine.stopMode && engine.nearbyKind == "fuel", { engine.stopMode = true; engine.loadNearby("fuel", false) })
         Pill("+ Charger", engine.stopMode && engine.nearbyKind == "charging", { engine.stopMode = true; engine.loadNearby("charging", false) })
         Pill(if (engine.via.isEmpty()) "+ Stop" else "Edit stops", false, { engine.stopsEditor = true })
-        if (engine.via.isNotEmpty()) Text(engine.via.joinToString(" › ") { it.name }, color = c.text, fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.widthIn(max = 220.dp))
-        if (costText != null) Text(costText, color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(horizontal = 8.dp))
-        engine.destRain?.let { Text(it, color = Warn, fontSize = 13.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 8.dp)) }
+        if (engine.via.isNotEmpty()) Text(com.headunit.launcher.Thai.text(engine.via.joinToString(" › ") { it.name }), color = c.text, fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.widthIn(max = 220.dp))
+        if (costText != null) Text(com.headunit.launcher.Thai.text(costText), color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(horizontal = 8.dp))
+        engine.destRain?.let { Text(com.headunit.launcher.Thai.text(it), color = Warn, fontSize = 13.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 8.dp)) }
     }
     Row(
         Modifier.floating(50.dp).horizontalScroll(rememberScrollState()).padding(6.dp),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
-        Text("Leave", color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(horizontal = 10.dp))
+        Text(com.headunit.launcher.Thai.text("Leave"), color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(horizontal = 10.dp))
         for ((label, m) in listOf("Now" to 0, "+15 min" to 15, "+30 min" to 30, "+1 h" to 60, "+2 h" to 120)) {
             Pill(label, engine.departMin == m, { if (engine.departMin != m) engine.setDeparture(m) })
         }
@@ -202,11 +202,11 @@ internal fun BoxScope.RoutePreview(engine: NavEngine) {
     ) {
         val pct = engine.prefs.i(PreferenceKeys.EV_CHARGE_PCT, 80).coerceIn(5, 100)
         val minArr = engine.prefs.i(PreferenceKeys.EV_MIN_ARRIVE, 20)
-        Text("Battery now", color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(horizontal = 10.dp))
+        Text(com.headunit.launcher.Thai.text("Battery now"), color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(horizontal = 10.dp))
         Pill("−", false, { engine.prefs.put(PreferenceKeys.EV_CHARGE_PCT, (pct - 10).coerceAtLeast(5)); engine.refreshEvPlan() })
-        Text("$pct%", color = c.text, fontSize = 16.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 4.dp))
+        Text(com.headunit.launcher.Thai.text("$pct%"), color = c.text, fontSize = 16.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 4.dp))
         Pill("+", false, { engine.prefs.put(PreferenceKeys.EV_CHARGE_PCT, (pct + 10).coerceAtMost(100)); engine.refreshEvPlan() })
-        Text("Arrive with at least", color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(start = 14.dp, end = 4.dp))
+        Text(com.headunit.launcher.Thai.text("Arrive with at least"), color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(start = 14.dp, end = 4.dp))
         for (m in listOf(10, 20, 30)) Pill("$m%", minArr == m, { engine.prefs.put(PreferenceKeys.EV_MIN_ARRIVE, m); engine.refreshEvPlan() })
         val eco = engine.prefs.b(PreferenceKeys.ROUTE_ECO, false)
         Pill(if (eco) "Eco route ✓" else "Eco route", eco, { engine.prefs.put(PreferenceKeys.ROUTE_ECO, !eco); engine.rerouteForSettings() })
@@ -216,17 +216,17 @@ internal fun BoxScope.RoutePreview(engine: NavEngine) {
     val narrowP = androidx.compose.ui.platform.LocalConfiguration.current.screenWidthDp < 720
     val destPart: @Composable (Modifier) -> Unit = { m ->
         Column(m) {
-            Text("Destination", color = c.sub, fontSize = 12.sp)
-            Text(engine.dest?.name ?: "", color = c.text, fontSize = 17.sp, fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis)
+            Text(com.headunit.launcher.Thai.text("Destination"), color = c.sub, fontSize = 12.sp)
+            Text(com.headunit.launcher.Thai.text(engine.dest?.name ?: ""), color = c.text, fontSize = 17.sp, fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis)
             val d = engine.dest
             if (d != null) Row(Modifier.padding(top = 4.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 val fav = engine.places.isFavourite(d)
                 Icon(if (fav) Icons.Rounded.Star else Icons.Rounded.StarBorder, "Favourite", tint = if (fav) Warn else c.sub,
                     modifier = Modifier.size(26.dp).clickable { engine.toast(if (engine.places.toggleFavourite(d)) "Saved to favourites" else "Removed from favourites", 2000) })
                 Icon(Icons.Rounded.Home, "Set as home", tint = c.sub,
-                    modifier = Modifier.size(26.dp).clickable { engine.places.setSlot("home", d); engine.toast("Home set to ${d.name}", 2500) })
+                    modifier = Modifier.size(26.dp).clickable { engine.places.setSlot("home", d); engine.toast("ตั้งค่าบ้านเป็น ${d.name} แล้ว", 2500) })
                 Icon(Icons.Rounded.Work, "Set as work", tint = c.sub,
-                    modifier = Modifier.size(26.dp).clickable { engine.places.setSlot("work", d); engine.toast("Work set to ${d.name}", 2500) })
+                    modifier = Modifier.size(26.dp).clickable { engine.places.setSlot("work", d); engine.toast("ตั้งค่าที่ทำงานเป็น ${d.name} แล้ว", 2500) })
                 var saving by remember { mutableStateOf(false) }
                 val mine = engine.places.customAt(d) != null
                 Icon(Icons.Rounded.BookmarkAdd, "Save with a name", tint = if (mine) c.accent else c.sub, modifier = Modifier.size(26.dp).clickable { saving = true })
@@ -246,13 +246,13 @@ internal fun BoxScope.RoutePreview(engine: NavEngine) {
                 Modifier.weight(1f).inset(18.dp, if (sel) c.accent else null)
                                         .clickable { engine.selectRoute(i) }.padding(horizontal = 14.dp, vertical = 9.dp),
             ) {
-                Text(label.uppercase(), color = if (sel) c.accent else c.sub, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
-                Text(Geo.fmtDur(r.time), color = c.text, fontSize = 22.sp, fontWeight = FontWeight.Bold)
-                Text("${Geo.fmtDist(r.len, engine.imperial)} · arrive ${fmt.format(java.util.Date(baseMs + (r.time * 1000).toLong()))}", color = c.sub, fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(com.headunit.launcher.Thai.text(label.uppercase()), color = if (sel) c.accent else c.sub, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
+                Text(com.headunit.launcher.Thai.text(Geo.fmtDur(r.time)), color = c.text, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                Text(com.headunit.launcher.Thai.text("${Geo.fmtDist(r.len, engine.imperial)} · ถึง ${fmt.format(java.util.Date(baseMs + (r.time * 1000).toLong()))}"), color = c.sub, fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 val via = viaOf(r)
                 val delayMin = Math.round(r.delay / 60.0).toInt()
                 Text(
-                    if (delayMin >= 1) "+$delayMin min traffic" else if (via.isNotEmpty()) "via $via" else "No delays",
+                    com.headunit.launcher.Thai.text(if (delayMin >= 1) "รถติด +$delayMin นาที" else if (via.isNotEmpty()) "ผ่าน $via" else "No delays"),
                     color = if (delayMin >= 10) Bad else if (delayMin >= 1) Warn else c.sub, fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis,
                 )
             }
@@ -266,8 +266,8 @@ internal fun BoxScope.RoutePreview(engine: NavEngine) {
         ) {
             Box(Modifier.align(Alignment.CenterStart).fillMaxHeight().fillMaxWidth(progress.value).background(c.accent))
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("Start navigation", color = Color.White, fontSize = 17.sp, fontWeight = FontWeight.Bold)
-                Text(if (hold) "Planned for later" else if (autoStart) "Starting in ${kotlin.math.ceil((1f - progress.value) * (countdownMs / 1000f)).toInt()} s" else "Tap to start", color = Color.White.copy(alpha = 0.85f), fontSize = 12.sp)
+                Text(com.headunit.launcher.Thai.text("Start navigation"), color = Color.White, fontSize = 17.sp, fontWeight = FontWeight.Bold)
+                Text(com.headunit.launcher.Thai.text(if (hold) "Planned for later" else if (autoStart) "เริ่มใน ${kotlin.math.ceil((1f - progress.value) * (countdownMs / 1000f)).toInt()} วินาที" else "Tap to start"), color = Color.White.copy(alpha = 0.85f), fontSize = 12.sp)
             }
         }
     }
@@ -304,7 +304,7 @@ private fun FlyOverBtn(engine: NavEngine) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(Icons.Rounded.PlayArrow, null, tint = c.accent, modifier = Modifier.size(24.dp))
-        Text(if (engine.flyingOver) "Flying…" else "Fly over route", color = c.accent, fontSize = 15.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(start = 6.dp))
+        Text(com.headunit.launcher.Thai.text(if (engine.flyingOver) "Flying…" else "Fly over route"), color = c.accent, fontSize = 15.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(start = 6.dp))
     }
 }
 
@@ -312,8 +312,8 @@ private fun FlyOverBtn(engine: NavEngine) {
 private fun ArrivalStat(value: String, label: String) {
     val c = LocalVw.current
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(value, color = c.text, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-        Text(label, color = c.sub, fontSize = 12.sp)
+        Text(com.headunit.launcher.Thai.text(value), color = c.text, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        Text(com.headunit.launcher.Thai.text(label), color = c.sub, fontSize = 12.sp)
     }
 }
 
@@ -330,9 +330,9 @@ internal fun ArrivalCard(engine: NavEngine, a: ArrivalInfo, modifier: Modifier =
         Box(Modifier.size(64.dp).clip(androidx.compose.foundation.shape.CircleShape).background(Good.copy(alpha = 0.18f)), contentAlignment = Alignment.Center) {
             Icon(Icons.Rounded.Check, null, tint = Good, modifier = Modifier.size(38.dp))
         }
-        Text("You've arrived", color = c.sub, fontSize = 14.sp)
+        Text(com.headunit.launcher.Thai.text("You've arrived"), color = c.sub, fontSize = 14.sp)
         Text(a.name, color = c.text, fontSize = 24.sp, fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis)
-        if (a.side.isNotEmpty()) Text("On the ${a.side}", color = c.accent, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+        if (a.side.isNotEmpty()) Text(com.headunit.launcher.Thai.text("ด้าน${a.side}"), color = c.accent, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
         Row(Modifier.fillMaxWidth().padding(vertical = 6.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
             ArrivalStat(Geo.fmtDist(a.dist, imp), "distance")
             ArrivalStat(Geo.fmtDur(a.secs), "time")
@@ -345,11 +345,11 @@ internal fun ArrivalCard(engine: NavEngine, a: ArrivalInfo, modifier: Modifier =
             ) {
                 Icon(Icons.Rounded.LocalParking, null, tint = Color(0xFF4C8DFF), modifier = Modifier.size(26.dp))
                 Column(Modifier.padding(start = 12.dp).weight(1f)) {
-                    Text("Nearest parking", color = c.sub, fontSize = 12.sp)
+                    Text(com.headunit.launcher.Thai.text("Nearest parking"), color = c.sub, fontSize = 12.sp)
                     Text(pk.place.name, color = c.text, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
-                Text(Geo.fmtDist(pk.dist, imp), color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(horizontal = 8.dp))
-                Text("Go", color = c.accent, fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                Text(com.headunit.launcher.Thai.text(Geo.fmtDist(pk.dist, imp)), color = c.sub, fontSize = 13.sp, modifier = Modifier.padding(horizontal = 8.dp))
+                Text(com.headunit.launcher.Thai.text("Go"), color = c.accent, fontSize = 15.sp, fontWeight = FontWeight.Bold)
             }
         }
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -388,14 +388,14 @@ internal fun NearbyCard(engine: NavEngine) {
     Column(Modifier.floating(24.dp).padding(14.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconBadge(nearbyIcon(engine.nearbyKind), c.accent, Modifier.padding(end = 12.dp), 36.dp)
-            Text(title, color = c.text, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
+            Text(com.headunit.launcher.Thai.text(title), color = c.text, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
             if (engine.nearbyBusy) CircularProgressIndicator(Modifier.size(18.dp), color = c.accent, strokeWidth = 2.dp)
             Icon(Icons.Rounded.Close, "Close", tint = c.sub, modifier = Modifier.padding(start = 12.dp).size(22.dp).clickable { engine.clearNearby() })
         }
         if (hasPrices) Row(Modifier.padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
             Pill(if (along) "Soonest" else "Nearest", engine.nearbySort != "cheap", { engine.changeNearbySort("near") })
             Pill("Cheapest", engine.nearbySort == "cheap", { engine.changeNearbySort("cheap") })
-            Text(com.headunit.launcher.FuelFinder.fuelName(engine.prefs.s(PreferenceKeys.FUEL_TYPE, "E10")), color = c.sub, fontSize = 12.sp, modifier = Modifier.padding(start = 6.dp))
+            Text(com.headunit.launcher.Thai.text(com.headunit.launcher.FuelFinder.fuelName(engine.prefs.s(PreferenceKeys.FUEL_TYPE, "E10"))), color = c.sub, fontSize = 12.sp, modifier = Modifier.padding(start = 6.dp))
         }
         LazyColumn(Modifier.heightIn(max = 230.dp).padding(top = 6.dp)) {
             items(engine.nearby) { n ->
@@ -406,17 +406,17 @@ internal fun NearbyCard(engine: NavEngine) {
                     Column(Modifier.weight(1f).padding(start = 12.dp)) {
                         Text(n.place.name, color = c.text, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         val sub = listOfNotNull(n.extra.takeIf { it.isNotBlank() }, n.place.sub.takeIf { it.isNotBlank() && engine.nearbyKind == "fuel" }).joinToString(" · ")
-                        if (sub.isNotBlank()) Text(sub, color = c.sub, fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        if (sub.isNotBlank()) Text(com.headunit.launcher.Thai.text(sub), color = c.sub, fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
-                    if (n.price != null) Text(com.headunit.launcher.fmtFuelPrice(n.price, n.unit), color = c.text, fontSize = 16.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(start = 8.dp))
+                    if (n.price != null) Text(com.headunit.launcher.Thai.text(com.headunit.launcher.fmtFuelPrice(n.price, n.unit)), color = c.text, fontSize = 16.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(start = 8.dp))
                     Column(horizontalAlignment = Alignment.End, modifier = Modifier.padding(start = 10.dp)) {
-                        Text(Geo.fmtDist(n.dist, engine.imperial), color = c.accent, fontSize = 14.sp, fontWeight = FontWeight.Bold, modifier = Modifier.clip(RoundedCornerShape(50)).background(c.accent.copy(alpha = 0.14f)).padding(horizontal = 10.dp, vertical = 4.dp))
-                        if (n.detourMin >= 0) Text("+${n.detourMin} min", color = c.sub, fontSize = 11.sp, modifier = Modifier.padding(top = 2.dp))
+                        Text(com.headunit.launcher.Thai.text(Geo.fmtDist(n.dist, engine.imperial)), color = c.accent, fontSize = 14.sp, fontWeight = FontWeight.Bold, modifier = Modifier.clip(RoundedCornerShape(50)).background(c.accent.copy(alpha = 0.14f)).padding(horizontal = 10.dp, vertical = 4.dp))
+                        if (n.detourMin >= 0) Text(com.headunit.launcher.Thai.text("+${n.detourMin} นาที"), color = c.sub, fontSize = 11.sp, modifier = Modifier.padding(top = 2.dp))
                     }
                 }
             }
         }
-        if (hasPrices) Text("Prices: Fuel Finder (gov.uk)", color = c.sub, fontSize = 10.sp, modifier = Modifier.padding(top = 4.dp))
+        if (hasPrices) Text(com.headunit.launcher.Thai.text("Prices: Fuel Finder (gov.uk)"), color = c.sub, fontSize = 10.sp, modifier = Modifier.padding(top = 4.dp))
     }
 }
 
@@ -541,6 +541,6 @@ internal fun LaneHero(sec: LaneSec, maneuver: String, advice: String?) {
             drawLine(Color.White.copy(alpha = 0.9f * a), o(xAt(0f, 0f), 0f), o(0f, h), 3.dp.toPx())
             drawLine(Color.White.copy(alpha = 0.9f * a), o(xAt(1f, 0f), 0f), o(w, h), 3.dp.toPx())
         }
-        if (advice != null) Text(advice, color = Color.White, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 6.dp, start = 16.dp, end = 16.dp))
+        if (advice != null) Text(com.headunit.launcher.Thai.text(advice), color = Color.White, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 6.dp, start = 16.dp, end = 16.dp))
     }
 }
