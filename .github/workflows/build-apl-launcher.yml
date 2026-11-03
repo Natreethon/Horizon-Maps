@@ -1,0 +1,63 @@
+name: Build APL Launcher WGT (unsigned)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/build-apl-launcher.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Download official APL Launcher v1.0.0 source
+        uses: actions/checkout@v4
+        with:
+          repository: Knikt/APL-Launcher-for-TizenOS
+          ref: v1.0.0
+          path: apl-source
+          persist-credentials: false
+
+      - name: Check upstream launcher
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd apl-source
+          python3 tools/check.py
+
+      - name: Create unsigned Tizen web package
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib, xml.etree.ElementTree as ET, zipfile
+
+          root = Path("apl-source/launcher")
+          for required in ("config.xml", "index.html", "icon.png"):
+              assert (root / required).is_file(), f"Missing: {required}"
+          ET.parse(root / "config.xml")
+          out = Path("dist/APL-Launcher-unsigned.wgt")
+          out.parent.mkdir(parents=True, exist_ok=True)
+          with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as z:
+              for p in sorted(root.rglob("*")):
+                  if p.is_file() and not p.name.endswith(".wgt") and not p.is_symlink():
+                      z.write(p, p.relative_to(root).as_posix())
+          with zipfile.ZipFile(out) as z:
+              assert z.testzip() is None, "Damaged ZIP payload"
+              assert {"config.xml", "index.html", "icon.png"} <= set(z.namelist())
+              print("Files:", len(z.namelist()))
+          print("Output:", out, out.stat().st_size, "bytes")
+          print("SHA256:", hashlib.sha256(out.read_bytes()).hexdigest())
+          print("IMPORTANT: UNSIGNED staging package. Let Apps2Samsung on the phone sign with the TV-specific Samsung certificate.")
+          PY
+
+      - name: Upload unsigned WGT for phone
+        uses: actions/upload-artifact@v4
+        with:
+          name: APL-Launcher-unsigned-WGT
+          path: dist/APL-Launcher-unsigned.wgt
+          if-no-files-found: error
+          retention-days: 7
