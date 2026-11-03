@@ -58,7 +58,7 @@ internal fun PackPickerDialog(current: PackRegion, onPick: (PackRegion) -> Unit,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Column(Modifier.weight(1f)) {
-                            Text(r.name, color = c.text, fontSize = 16.sp, fontWeight = if (sel) FontWeight.SemiBold else FontWeight.Medium)
+                            Text(com.headunit.launcher.Thai.text(r.name), color = c.text, fontSize = 16.sp, fontWeight = if (sel) FontWeight.SemiBold else FontWeight.Medium)
                             if (q.isNotBlank()) Text(com.headunit.launcher.Thai.text(r.group), color = c.sub, fontSize = 12.sp)
                         }
                         if (sel) Icon(Icons.Rounded.Check, null, tint = c.accent, modifier = Modifier.size(20.dp))
