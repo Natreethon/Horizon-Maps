@@ -4,7 +4,7 @@ import re
 root = Path(__file__).resolve().parents[1]
 k = root / 'app/src/main/kotlin/com/headunit/launcher'
 assert 'applicationIdSuffix = ".thai"' in (root/'app/build.gradle.kts').read_text()
-assert 'Natreethon/Horizon-Maps' in (root/'app/build.gradle.kts').read_text()
+assert 'Tes1121/Horizon-Maps' in (root/'app/build.gradle.kts').read_text()
 assert 'setLanguage(Locale.UK)' not in (k/'NavEngine.kt').read_text()
 assert 'Thai.voiceAvailable(tts?.setLanguage(Thai.locale))' in (k/'NavEngine.kt').read_text()
 assert 'language=en-GB' not in (k/'Geo.kt').read_text()
